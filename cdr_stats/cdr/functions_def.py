@@ -167,7 +167,6 @@ def get_country_name(id, type=''):
         return _('Unknown')
 
 
-@cached(3600)
 def chk_account_code(request):
     """Get account code from  request"""
     acc_code = ''
