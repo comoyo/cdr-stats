@@ -406,7 +406,8 @@ MONGO_CDRSTATS = {
     'DAILY_ANALYTIC': 'daily_analytic',
     'MONTHLY_ANALYTIC': 'monthly_analytic',
     'CONC_CALL': 'concurrent_call',
-    'CONC_CALL_AGG': 'concurrent_call_aggregate'
+    'CONC_CALL_AGG': 'concurrent_call_aggregate',
+    'URI': 'mongodb://localhost:27017'
 }
 
 #API PLAYGROUND
@@ -533,7 +534,7 @@ from pymongo.connection import Connection
 from pymongo.errors import ConnectionFailure
 import sys
 try:
-    connection = Connection(MONGO_CDRSTATS['HOST'], MONGO_CDRSTATS['PORT'])
+    connection = Connection(MONGO_CDRSTATS['URI'])
     DBCON = connection[MONGO_CDRSTATS['DB_NAME']]
 except ConnectionFailure, e:
     sys.stderr.write("Could not connect to MongoDB: %s" % e)
