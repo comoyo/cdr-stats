@@ -301,7 +301,7 @@ func_install_frontend(){
 
     case $INSTALL_MODE in
         'CLONE')
-            git clone git://github.com/Star2Billing/cdr-stats.git
+            git clone git://github.com/comoyo/cdr-stats.git
 
             #Install Develop / Master
             if echo $BRANCH | grep -i "^develop" > /dev/null ; then
@@ -768,7 +768,7 @@ func_logrotate() {
 func_install_mongodb() {
     cd /usr/src/
     rm install-mongodb.sh
-    wget https://raw.github.com/Star2Billing/cdr-stats/$BRANCH/install/install-mongodb.sh
+    wget https://raw.github.com/comoyo/cdr-stats/$BRANCH/install/install-mongodb.sh
     bash install-mongodb.sh
 }
 

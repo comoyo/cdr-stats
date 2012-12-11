@@ -16,7 +16,7 @@
 #
 # To download and run the script on your server :
 #
-# cd /usr/src/ ; wget --no-check-certificate https://raw.github.com/Star2Billing/cdr-stats/master/install/install-mongodb.sh -O install-mongodb.sh ; bash install-mongodb.sh
+# cd /usr/src/ ; wget --no-check-certificate https://raw.github.com/comoyo/cdr-stats/master/install/install-mongodb.sh -O install-mongodb.sh ; bash install-mongodb.sh
 #
 
 #Include general functions
