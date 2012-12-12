@@ -1,0 +1,29 @@
+{% extends "frontend/master.html" %}
+{% load i18n cdr_extras common_tags %}
+
+{% block content %}
+
+{% for element in row %}
+    <b>General</b><br>
+    From number : {{ element.caller_id_number|to_json }}<br>
+    Destination number : {{ element.destination_number|to_json }}<br>
+    Duration : {{ element.duration|to_json }}<br>
+    BillSec : {{ element.billsec|to_json }}<br>
+
+    <p/>
+    <p/>
+    <b>Client Statistics</b><br>
+    max rtt : {{ element.client_max_rtt|to_json }}<br>
+    max tx packet loss : {{ element.client_max_tx_packet_loss|to_json }}<br>
+    rx fraction loss : {{ element.client_rx_fraction_loss|to_json }}<br>
+    rx packets : {{ element.client_rx_packets|to_json }}<br>
+    rx packets lost : {{ element.client_rx_packets_lost|to_json }}<br>
+    tx packets : {{ element.client_tx_packets|to_json }}<br>
+
+    <p/>
+    <p/>
+    <p>{% trans "<b>Complete CDR Entry</b>" %} :<pre>{{ element }}</pre></p>
+   
+{% endfor %}
+
+{% endblock %}

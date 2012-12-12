@@ -598,59 +598,20 @@ def cdr_detail(request, id, switch_id):
 
         get the single call record in detail from mongodb collection
     """
-    c_switch = get_object_or_404(Switch, id=switch_id)
-    ipaddress = c_switch.ipaddress
     menu = show_menu(request)
 
-    if settings.CDR_BACKEND[settings.LOCAL_SWITCH_IP]['cdr_type'] == 'freeswitch':
-        #Connect on MongoDB Database
-        host = settings.CDR_BACKEND[ipaddress]['host']
-        port = settings.CDR_BACKEND[ipaddress]['port']
-        db_name = settings.CDR_BACKEND[ipaddress]['db_name']
-        table_name = settings.CDR_BACKEND[ipaddress]['table_name']
-        try:
-            connection = Connection(host, port)
-            DBCON = connection[db_name]
-        except ConnectionFailure:
-            raise Http404
+    #Connect on MongoDB Database
+    try:
+        connection = Connection(settings.MONGO_CDRSTATS['URI'])
+        DBCON = connection[settings.MONGO_CDRSTATS['DB_NAME']]
+    except ConnectionFailure:
+        raise Http404
 
-        doc = DBCON[table_name].find({'_id': ObjectId(id)})
-        return render_to_response(
-            'frontend/cdr_detail_freeswitch.html',
-            {'row': list(doc), 'menu': menu},
-            context_instance=RequestContext(request))
-
-    elif settings.CDR_BACKEND[settings.LOCAL_SWITCH_IP]['cdr_type'] == 'asterisk':
-        #Connect on Mysql Database
-        #TODO: support other DBMS
-        #TODO: Support postgresql
-        import MySQLdb as Database
-        db_name = settings.CDR_BACKEND[ipaddress]['db_name']
-        table_name = settings.CDR_BACKEND[ipaddress]['table_name']
-        user = settings.CDR_BACKEND[ipaddress]['user']
-        password = settings.CDR_BACKEND[ipaddress]['password']
-        host = settings.CDR_BACKEND[ipaddress]['host']
-        try:
-            connection = Database.connect(user=user, passwd=password,
-                                          db=db_name, host=host)
-            cursor = connection.cursor()
-        except:
-            raise Http404
-
-        cursor.execute(
-            "SELECT dst, calldate, clid, src, dst, dcontext, channel, dstchannel "
-            "lastapp, duration, billsec, disposition, amaflags, accountcode, "
-            "uniqueid, userfield, %s FROM %s WHERE %s=%s" %
-            (settings.ASTERISK_PRIMARY_KEY, table_name,
-            settings.ASTERISK_PRIMARY_KEY, id))
-        row = cursor.fetchone()
-        if not row:
-            raise Http404
-
-        return render_to_response(
-            'frontend/cdr_detail_asterisk.html',
-            {'row': list(row), 'menu': menu},
-            context_instance=RequestContext(request))
+    doc = DBCON[settings.MONGO_CDRSTATS['CDR_COMMON']].find({'_id': ObjectId(id)})
+    return render_to_response(
+        'frontend/cdr_detail_comoyo.html',
+        {'row': list(doc), 'menu': menu},
+        context_instance=RequestContext(request))
 
 
 def chk_date_for_hrs(previous_date, graph_date):
