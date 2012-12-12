@@ -19,6 +19,10 @@
     rx packets : {{ element.client_rx_packets|to_json }}<br>
     rx packets lost : {{ element.client_rx_packets_lost|to_json }}<br>
     tx packets : {{ element.client_tx_packets|to_json }}<br>
+    
+    <p/>
+    <p/>
+    <p>{% trans "<b>Midee Statistics</b>" %} :<pre>{{ element.midee_statistics|to_json  }}</pre></p>
 
     <p/>
     <p/>
