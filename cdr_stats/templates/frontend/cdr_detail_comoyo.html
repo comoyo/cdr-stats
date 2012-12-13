@@ -22,11 +22,55 @@
     
     <p/>
     <p/>
-    <p>{% trans "<b>Midee Statistics</b>" %} :<pre>{{ element.midee_statistics|to_json  }}</pre></p>
+    <b>Midee Statistics</b><br>
+    username : {{ element.midee_statistics.username|to_json}}<br>
+    uptime : {{ element.midee_statistics.uptime|to_json}}<br>
+    footee_id : {{ element.midee_statistics.footee_id|to_json}}<br>
+    counter_connections : {{ element.midee_statistics.counter_connections|to_json}}<br>
 
     <p/>
+
+    {% for connection in element.midee_statistics.connections %}
+        {% for item in connection %}
+            {% if item == "c_type" %}
+                {{ item }}: {{ connection.c_type }}<br>
+            {% endif %}
+            {% if item == "c_transport" %}
+                {{ item }}: {{ connection.c_transport }}<br>
+            {% endif %}
+            {% if item == "c_dest" %}
+                {{ item }}: {{ connection.c_dest }}<br>
+            {% endif %}
+            {% if item == "c_dest_rtcp" %}
+                {{ item }}: {{ connection.c_dest_rtcp }}<br>
+            {% endif %}
+            {% if item == "c_client_public_ip" %}
+                {{ item }}: {{ connection.c_client_public_ip }}<br>
+            {% endif %}
+            {% if item == "c_tx_packets" %}
+                {{ item }}: {{ connection.c_tx_packets }}<br>
+            {% endif %}
+            {% if item == "c_tx_rtcp_packets" %}
+                {{ item }}: {{ connection.c_tx_rtcp_packets }}<br>
+            {% endif %}
+            {% if item == "c_tx_lost_packets" %}
+                {{ item }}: {{ connection.c_tx_lost_packets }}<br>
+            {% endif %}
+            {% if item == "c_tx_loss" %}
+                {{ item }}: {{ connection.c_tx_loss }}<br>
+            {% endif %}
+            {% if item == "c_ordered_packets" %}
+                {{ item }}: {{ connection.c_ordered_packets }}<br>
+            {% endif %}
+            {% if item == "c_expected_packets" %}
+                {{ item }}: {{ connection.c_expected_packets }}<br>
+            {% endif %}
+            {% if item == "c_remote_ip" %}
+                {{ item }}: {{ connection.c_remote_ip }}<br>
+            {% endif %}
+        {% endfor %}
     <p/>
-    <p>{% trans "<b>Complete CDR Entry</b>" %} :<pre>{{ element }}</pre></p>
+    {% endfor %}
    
 {% endfor %}
 
