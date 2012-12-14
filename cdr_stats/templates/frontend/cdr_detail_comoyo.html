@@ -5,8 +5,8 @@
 
 {% for element in row %}
     <b>General</b><br>
-    From number : {{ element.caller_id_number|to_json }}<br>
-    To number : {{ element.destination_number|to_json }}<br>
+    From number : {{ element.caller_id_number }}<br>
+    To number : {{ element.destination_number }}<br>
     Start : {{ element.start_uepoch|date:"r" }}<br>
     End : {{ element.end_uepoch|date:"r" }}<br>
     {% if element.answer_uepoch %}
@@ -18,26 +18,26 @@
         Duration : {{ element.duration }} Sec<br>
     {% endif %}
     {% if element.billsec %}
-        BillSec : {{ element.billsec|to_json }} Sec<br>
+        BillSec : {{ element.billsec }} Sec<br>
     {% endif %}
 
     <p/>
     <p/>
     <b>Client Statistics</b><br>
-    max rtt : {{ element.client_max_rtt|to_json }}<br>
-    max tx packet loss : {{ element.client_max_tx_packet_loss|to_json }}<br>
-    rx fraction loss : {{ element.client_rx_fraction_loss|to_json }}<br>
-    rx packets : {{ element.client_rx_packets|to_json }}<br>
-    rx packets lost : {{ element.client_rx_packets_lost|to_json }}<br>
-    tx packets : {{ element.client_tx_packets|to_json }}<br>
+    max rtt : {{ element.client_max_rtt }}<br>
+    max tx packet loss : {{ element.client_max_tx_packet_loss }}<br>
+    rx fraction loss : {{ element.client_rx_fraction_loss }}<br>
+    rx packets : {{ element.client_rx_packets }}<br>
+    rx packets lost : {{ element.client_rx_packets_lost }}<br>
+    tx packets : {{ element.client_tx_packets }}<br>
     
     <p/>
     <p/>
     <b>Midee Statistics</b><br>
-    username : {{ element.midee_statistics.username|to_json}}<br>
-    uptime : {{ element.midee_statistics.uptime|to_json}}<br>
-    footee_id : {{ element.midee_statistics.footee_id|to_json}}<br>
-    counter_connections : {{ element.midee_statistics.counter_connections|to_json}}<br>
+    username : {{ element.midee_statistics.username }}<br>
+    uptime : {{ element.midee_statistics.uptime }}<br>
+    footee_id : {{ element.midee_statistics.footee_id }}<br>
+    counter_connections : {{ element.midee_statistics.counter_connections }}<br>
 
     <p/>
 
