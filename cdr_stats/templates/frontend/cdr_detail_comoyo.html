@@ -6,9 +6,20 @@
 {% for element in row %}
     <b>General</b><br>
     From number : {{ element.caller_id_number|to_json }}<br>
-    Destination number : {{ element.destination_number|to_json }}<br>
-    Duration : {{ element.duration|to_json }}<br>
-    BillSec : {{ element.billsec|to_json }}<br>
+    To number : {{ element.destination_number|to_json }}<br>
+    Start : {{ element.start_uepoch|date:"r" }}<br>
+    End : {{ element.end_uepoch|date:"r" }}<br>
+    {% if element.answer_uepoch %}
+        Answer : {{ element.answer_uepoch|date:"r" }}<br>
+    {% else %}
+        No Answer<br>
+    {% endif %}
+    {% if element.duration %}
+        Duration : {{ element.duration }} Sec<br>
+    {% endif %}
+    {% if element.billsec %}
+        BillSec : {{ element.billsec|to_json }} Sec<br>
+    {% endif %}
 
     <p/>
     <p/>
