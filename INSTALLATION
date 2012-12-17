@@ -1,0 +1,39 @@
+When developing for cdr-stats, use a virtualbox and not your system so that you just can create a new machine if installation fails.
+
+To install on a clean machine fetch the install script from github.
+
+    wget –no-check-certificate https://raw.github.com/comoyo/cdr-stats/master/install/install-cdr-stats.sh -O install-cdr-stats.sh
+
+run it:
+	
+    sudo bash install-cdr-stats.sh
+	
+During the installation you will be asked to chose between Freeswitch/Asterisk, chose Freeswitch
+Then chose to install all.
+
+Sometimes the installation will fail, so you need to check that the install was a success. This
+can be done by using telnet to the default installation port 8008.
+
+    sudo telnet localhost 8008
+    GET
+
+And check that what you get looks like the correct website.
+If the installation fails, create a new machine and install again.
+
+Then you need to change /usr/share/cdr_stats/setting_local.py so that it points to our mongodb.
+That is done by changing the MONGO_CDRSTATS URI at the end of the file.
+	
+If you install to staging/prod you need to setup port forwarding so that we can access the server on port 80.
+
+    iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
+    iptables -A INPUT -i eth0 -p tcp --dport 8008 -j ACCEPT
+    iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8008
+
+Then fix so that the iptable is restored by default on reboot, for example like this:
+
+    https://help.ubuntu.com/community/IptablesHowTo#Solution_.232_.2BAC8-etc.2BAC8-network.2BAC8-if-pre-up.d_and_...2BAC8-if-post-down.d
+
+If you need to update an already installed version of cdr-stats. Copy the modified files into the correct location at /usr/share/cdr_stats
+Do not try to run the installscript again, that will ruin the installation.
+
+There is no uninstall script. If things go wrong start over with a clean machine.
