@@ -24,60 +24,64 @@
     <p/>
     <p/>
     <b>Client Statistics</b><br>
-    max rtt : {{ element.client_max_rtt }}<br>
-    max tx packet loss : {{ element.client_max_tx_packet_loss }}<br>
-    rx fraction loss : {{ element.client_rx_fraction_loss }}<br>
-    rx packets : {{ element.client_rx_packets }}<br>
-    rx packets lost : {{ element.client_rx_packets_lost }}<br>
-    tx packets : {{ element.client_tx_packets }}<br>
-    
+    Maximum roundtrip delay : {{ element.client_max_rtt }}<br>
+    Remote end packet loss : {{ element.client_max_tx_packet_loss }}<br>
+    Local end percent of lost packets : {{ element.client_rx_fraction_loss }}<br>
+    Local end packets recieved: {{ element.client_rx_packets }}<br>
+    Local end packets lost : {{ element.client_rx_packets_lost }}<br>
+    Local end packets sent: {{ element.client_tx_packets }}<br>
+   
     <p/>
     <p/>
     <b>Midee Statistics</b><br>
-    username : {{ element.midee_statistics.username }}<br>
-    uptime : {{ element.midee_statistics.uptime }}<br>
-    footee_id : {{ element.midee_statistics.footee_id }}<br>
-    counter_connections : {{ element.midee_statistics.counter_connections }}<br>
-
+    Username : {{ element.midee_statistics.username }}<br>
+    Uptime : {{ element.midee_statistics.uptime }}<br>
+    Footee_id : {{ element.midee_statistics.footee_id }}<br>
+    Counter_connections : {{ element.midee_statistics.counter_connections }}<br>
+ 
     <p/>
-
     {% for connection in element.midee_statistics.connections %}
         {% for item in connection %}
             {% if item == "c_type" %}
-                {{ item }}: {{ connection.c_type }}<br>
+                {% if connection.c_type == "internal" %}
+                    Direction : Midee to Client<br>
+                {% endif %}
+                {% if connection.c_type == "external" %}
+                    Direction : Midee to Remote/Sip Trunk<br>
+                {% endif %}
             {% endif %}
             {% if item == "c_transport" %}
-                {{ item }}: {{ connection.c_transport }}<br>
+                Transport : {{ connection.c_transport }}<br>
             {% endif %}
             {% if item == "c_dest" %}
-                {{ item }}: {{ connection.c_dest }}<br>
+                Remote/SIP Trunk IP:PORT for RTP : {{ connection.c_dest }}<br>
             {% endif %}
             {% if item == "c_dest_rtcp" %}
-                {{ item }}: {{ connection.c_dest_rtcp }}<br>
+                Remote/SIP Trunk IP:PORT for RTCP : {{ connection.c_dest_rtcp }}<br>
             {% endif %}
             {% if item == "c_client_public_ip" %}
-                {{ item }}: {{ connection.c_client_public_ip }}<br>
+                Client public IP : {{ connection.c_client_public_ip }}<br>
             {% endif %}
             {% if item == "c_tx_packets" %}
-                {{ item }}: {{ connection.c_tx_packets }}<br>
+                Packets sent : {{ connection.c_tx_packets }}<br>
             {% endif %}
             {% if item == "c_tx_rtcp_packets" %}
-                {{ item }}: {{ connection.c_tx_rtcp_packets }}<br>
+                RTCP reports sent : {{ connection.c_tx_rtcp_packets }}<br>
             {% endif %}
             {% if item == "c_tx_lost_packets" %}
-                {{ item }}: {{ connection.c_tx_lost_packets }}<br>
+                Lost packets : {{ connection.c_tx_lost_packets }}<br>
             {% endif %}
             {% if item == "c_tx_loss" %}
-                {{ item }}: {{ connection.c_tx_loss }}<br>
+                Percent of lost packets : {{ connection.c_tx_loss }}<br>
             {% endif %}
-            {% if item == "c_ordered_packets" %}
-                {{ item }}: {{ connection.c_ordered_packets }}<br>
+            {% if item == "c_tx_ordered_packets" %}
+                Ordered packets : {{ connection.c_tx_ordered_packets }}<br>
             {% endif %}
-            {% if item == "c_expected_packets" %}
-                {{ item }}: {{ connection.c_expected_packets }}<br>
+            {% if item == "c_tx_expected_packets" %}
+                Expected packets : {{ connection.c_tx_expected_packets }}<br>
             {% endif %}
             {% if item == "c_remote_ip" %}
-                {{ item }}: {{ connection.c_remote_ip }}<br>
+                Remote/SIP Trunk IP:PORT : {{ connection.c_remote_ip }}<br>
             {% endif %}
         {% endfor %}
     <p/>
