@@ -113,7 +113,7 @@ class SearchForm(forms.Form):
     q_client_rtt_type.widget.attrs['class'] = 'input-small'
 
 
-    q_client_tx_packet_loss = forms.CharField(label=_('Remote end packet loss'),
+    q_client_tx_packet_loss = forms.CharField(label=_('Remote end packet loss (%)'),
                                required=False)
 
     q_client_tx_packet_loss_type = forms.ChoiceField(label='',
