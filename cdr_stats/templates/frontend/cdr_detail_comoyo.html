@@ -61,7 +61,8 @@
                 Remote/SIP Trunk IP:PORT for RTCP : {{ connection.c_dest_rtcp }}<br>
             {% endif %}
             {% if item == "c_client_public_ip" %}
-                Client public IP : {{ connection.c_client_public_ip }}<br>
+                Client public IP : {{ connection.c_client_public_ip }}
+				<A HREF="http://api.hostip.info/get_html.php?ip={{ connection.c_client_public_ip }}" target="_blank"> Lookup IP origin</a><br>
             {% endif %}
             {% if item == "c_tx_packets" %}
                 Packets sent : {{ connection.c_tx_packets }}<br>
