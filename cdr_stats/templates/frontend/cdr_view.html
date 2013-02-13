@@ -140,6 +140,30 @@
          </div>
      </div>
   </div>
+  <div class="row">
+     <div class="span12">
+         <div class="row">
+             <div class="span4">
+                <label class="control-label" for="id_{{ form.q_client_rtt.name }}">{{ form.q_client_rtt.label }}</label>
+                <div class="input">
+                    {{ form.q_client_rtt }}&nbsp;&nbsp;{{ form.q_client_rtt_type }}
+                </div>
+                {% if form.q_client_rtt.errors %}
+                    <span class="help-inline">{{ form.q_client_rtt.errors }}</span>
+                {% endif %}
+             </div>
+             <div class="span4">
+                <label class="control-label" for="id_{{ form.q_client_tx_packet_loss.name }}">{{ form.q_client_tx_packet_loss.label }}</label>
+                <div class="input">
+                    {{ form.q_client_tx_packet_loss }}&nbsp;&nbsp;{{ form.q_client_tx_packet_loss_type }}
+                </div>
+                {% if form.q_client_tx_packet_loss.errors %}
+                    <span class="help-inline">{{ form.q_client_tx_packet_loss.errors }}</span>
+                {% endif %}
+             </div>
+         </div>
+     </div>
+  </div>
 
   <label></label>
   <div class="actions">

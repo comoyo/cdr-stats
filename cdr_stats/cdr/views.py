@@ -224,6 +224,10 @@ def cdr_view(request):
     direction = ''
     duration = ''
     duration_type = ''
+    q_client_rtt = ''
+    q_client_rtt_type = ''
+    q_client_tx_packet_loss = ''
+    q_client_tx_packet_loss_type = ''
     due = ''
     caller = ''
     caller_type = ''
@@ -248,6 +252,10 @@ def cdr_view(request):
             request.session['session_caller_type'] = ''
             request.session['session_duration'] = ''
             request.session['session_duration_type'] = ''
+            request.session['session_q_client_rtt'] = ''
+            request.session['session_q_client_rtt_type'] = ''
+            request.session['session_q_client_tx_packet_loss'] = ''
+            request.session['session_q_client_tx_packet_loss_type'] = ''
             request.session['session_hangup_cause_id'] = ''
             request.session['session_switch_id'] = ''
             request.session['session_direction'] = ''
@@ -286,13 +294,26 @@ def cdr_view(request):
             caller_type = variable_value(request, 'caller_type')
             if caller:
                 request.session['session_caller'] = caller
-                request.session['session_accountcode_type'] = caller_type
+                request.session['session_caller_type'] = caller_type
 
             duration = variable_value(request, 'duration')
             duration_type = variable_value(request, 'duration_type')
             if duration:
                 request.session['session_duration'] = duration
                 request.session['session_duration_type'] = duration_type
+
+            q_client_rtt = variable_value(request, 'q_client_rtt')
+            q_client_rtt_type = variable_value(request, 'q_client_rtt_type')
+            if q_client_rtt:
+                request.session['session_q_client_rtt'] = q_client_rtt
+                request.session['session_q_client_rtt_type'] = q_client_rtt_type
+
+            q_client_tx_packet_loss = variable_value(request, 'q_client_tx_packet_loss')
+            q_client_tx_packet_loss_type = variable_value(request, 'q_client_tx_packet_loss_type')
+            if q_client_tx_packet_loss:
+                request.session['session_q_client_tx_packet_loss'] = q_client_tx_packet_loss
+                request.session['session_q_client_tx_packet_loss_type'] = q_client_tx_packet_loss_type
+
 
             direction = variable_value(request, 'direction')
             if direction and direction != 'all':
@@ -363,6 +384,10 @@ def cdr_view(request):
             caller_type = request.session.get('session_caller_type')
             duration = request.session.get('session_duration')
             duration_type = request.session.get('session_duration_type')
+            q_client_rtt = request.session.get('session_q_client_rtt')
+            q_client_rtt_type = request.session.get('session_q_client_rtt_type')
+            q_client_tx_packet_loss = request.session.get('session_q_client_tx_packet_loss')
+            q_client_tx_packet_loss_type = request.session.get('session_q_client_tx_packet_loss_type')
             direction = request.session.get('session_direction')
             switch_id = request.session.get('session_switch_id')
             hangup_cause_id = request.session.get('session_hangup_cause_id')
@@ -395,6 +420,10 @@ def cdr_view(request):
         request.session['session_caller_type'] = ''
         request.session['session_duration'] = ''
         request.session['session_duration_type'] = ''
+        request.session['session_q_client_rtt'] = ''
+        request.session['session_q_client_rtt_type'] = ''
+        request.session['session_q_client_tx_packet_loss'] = ''
+        request.session['session_q_client_tx_packet_loss_type'] = ''
         request.session['session_hangup_cause_id'] = ''
         request.session['session_switch_id'] = ''
         request.session['session_direction'] = ''
@@ -439,6 +468,14 @@ def cdr_view(request):
     if due:
         query_var['duration'] = daily_report_query_var['duration_daily'] = due
 
+    qty_rtt = mongodb_int_filter(q_client_rtt, q_client_rtt_type)
+    if qty_rtt:
+        query_var['client_max_rtt'] = daily_report_query_var['client_max_rtt'] = qty_rtt
+
+    qty_tx_p_l = mongodb_int_filter(q_client_tx_packet_loss, q_client_tx_packet_loss_type)
+    if qty_tx_p_l:
+        query_var['client_max_tx_packet_loss'] = daily_report_query_var['client_max_tx_packet_loss'] = qty_tx_p_l
+
     if switch_id and int(switch_id) != 0:
         daily_report_query_var['metadata.switch_id'] = int(switch_id)
         query_var['switch_id'] = int(switch_id)
@@ -479,6 +516,10 @@ def cdr_view(request):
             'caller_type': caller_type,
             'duration': duration,
             'duration_type': duration_type,
+            'q_client_rtt': q_client_rtt,
+            'q_client_rtt_type': q_client_rtt_type,
+            'q_client_tx_packet_loss': q_client_tx_packet_loss,
+            'q_client_tx_packet_loss_type': q_client_tx_packet_loss_type,
             'result': result,
             'direction': direction,
             'hangup_cause': hangup_cause_id,
@@ -614,6 +655,7 @@ def cdr_detail(request, id, switch_id):
         'frontend/cdr_detail_comoyo.html',
         {'row': list(doc), 'menu': menu},
         context_instance=RequestContext(request))
+
 
 
 def chk_date_for_hrs(previous_date, graph_date):

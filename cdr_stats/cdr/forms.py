@@ -104,6 +104,23 @@ class SearchForm(forms.Form):
     country_id = forms.MultipleChoiceField(label=_('Country'), required=False,
                                            choices=country_list_with_all())
 
+    q_client_rtt = forms.CharField(label=_('Client max RTT'),
+                               required=False)
+
+    q_client_rtt_type = forms.ChoiceField(label='',
+                                          required=False,
+                                          choices=COMPARE_LIST)
+    q_client_rtt_type.widget.attrs['class'] = 'input-small'
+
+
+    q_client_tx_packet_loss = forms.CharField(label=_('Remote end packet loss'),
+                               required=False)
+
+    q_client_tx_packet_loss_type = forms.ChoiceField(label='',
+                                                     required=False,
+                                                     choices=COMPARE_LIST)
+    q_client_tx_packet_loss_type.widget.attrs['class'] = 'input-small'
+
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
         self.fields['switch'].choices = sw_list_with_all()
