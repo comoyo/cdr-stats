@@ -1,6 +1,9 @@
 {% extends "frontend/master.html" %}
 {% load i18n cdr_extras common_tags %}
 
+def get_first(self):
+    return self.c_client_public_ip.partition(':')[0]
+
 {% block content %}
 
 {% for element in row %}
@@ -61,7 +64,8 @@
                 Remote/SIP Trunk IP:PORT for RTCP : {{ connection.c_dest_rtcp }}<br>
             {% endif %}
             {% if item == "c_client_public_ip" %}
-                Client public IP : {{ connection.c_client_public_ip }}
+                Client public IP : 
+				<A HREF="http://www.geoiptool.com/en/?IP={{ connection.get_first }}" target="_blank">{{ connection.c_client_public_ip }</a>
 				<A HREF="http://api.hostip.info/get_html.php?ip={{ connection.c_client_public_ip }}" target="_blank"> Lookup IP origin</a><br>
             {% endif %}
             {% if item == "c_tx_packets" %}
