@@ -26,7 +26,11 @@
     <p/>
     <b>Client Statistics</b><br>
     Maximum roundtrip delay : {{ element.client_max_rtt }}<br>
-    Remote end packet loss : {{ element.client_max_tx_packet_loss }}<br>
+    Average roundtrip delay : {{ element.client_avg_rtt }}<br>
+    Minimum roundtrip delay : {{ element.client_min_rtt }}<br>
+    Remote end max packet loss : {{ element.client_max_tx_packet_loss }}<br>
+    Remote end average packet loss : {{ element.client_avg_tx_packet_loss }}<br>
+    Remote end min packet loss : {{ element.client_min_tx_packet_loss }}<br>
     Local end percent of lost packets : {{ element.client_rx_fraction_loss }}<br>
     Local end packets recieved: {{ element.client_rx_packets }}<br>
     Local end packets lost : {{ element.client_rx_packets_lost }}<br>
