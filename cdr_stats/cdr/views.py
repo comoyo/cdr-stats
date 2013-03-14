@@ -647,6 +647,7 @@ def cdr_detail(request, id, switch_id):
     try:
         connection = Connection(settings.MONGO_CDRSTATS['URI'])
         DBCON = connection[settings.MONGO_CDRSTATS['DB_NAME']]
+        DBCON.authenticate(settings.MONGO_CDRSTATS['USER'],settings.MONGO_CDRSTATS['PASSWORD'])
     except ConnectionFailure:
         raise Http404
 

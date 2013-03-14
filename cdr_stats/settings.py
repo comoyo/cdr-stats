@@ -407,7 +407,9 @@ MONGO_CDRSTATS = {
     'MONTHLY_ANALYTIC': 'monthly_analytic',
     'CONC_CALL': 'concurrent_call',
     'CONC_CALL_AGG': 'concurrent_call_aggregate',
-    'URI': 'mongodb://localhost:27017'
+    'URI': 'mongodb://localhost:27017',
+    'USER': 'TestUser',
+    'PASSWORD': 'password'
 }
 
 #API PLAYGROUND
@@ -536,6 +538,7 @@ import sys
 try:
     connection = Connection(MONGO_CDRSTATS['URI'])
     DBCON = connection[MONGO_CDRSTATS['DB_NAME']]
+    DBCON.authenticate(MONGO_CDRSTATS['USER'],MONGO_CDRSTATS['PASSWORD'])
 except ConnectionFailure, e:
     sys.stderr.write("Could not connect to MongoDB: %s" % e)
     sys.exit(1)

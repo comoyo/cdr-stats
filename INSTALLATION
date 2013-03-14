@@ -20,8 +20,9 @@ can be done by using telnet to the default installation port 8008.
 And check that what you get looks like the correct website.
 If the installation fails, create a new machine and install again.
 
-Then you need to change /usr/share/cdr_stats/setting_local.py so that it points to our mongodb.
-That is done by changing the MONGO_CDRSTATS URI at the end of the file.
+Then you need to change /usr/share/cdr_stats/setting_local.py so that it points to our mongodb,
+and add the username and password for MongoDb to the same file.
+That is done by changing the MONGO_CDRSTATS URI, USER and PASSWORD at the end of the file.
 	
 If you install to staging/prod you need to setup port forwarding so that we can access the server on port 80.
 

@@ -168,5 +168,7 @@ MONGO_CDRSTATS = {
     'MONTHLY_ANALYTIC': 'monthly_analytic',
     'CONC_CALL': 'concurrent_call',
     'CONC_CALL_AGG': 'concurrent_call_aggregate',
-    'URI': 'mongodb://localhost:27017'
+    'URI': 'mongodb://localhost:27017',
+    'USER': 'TestUser',
+    'PASSWORD': 'password'
 }
