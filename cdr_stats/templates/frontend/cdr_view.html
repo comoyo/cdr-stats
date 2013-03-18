@@ -90,6 +90,12 @@
                 <span class="help-inline error">{{ form.caller.errors }}</span>
             {% endif %}
           </div>
+          <div class="span4">
+            <label class="control-label" for="id_{{ form.caller_filter.name }}">{{ form.caller_filter.label }}</label>
+            <div class="input">
+              {{ form.caller_filter }}
+            </div>
+          </div>
       </div>
   </div>
   </div>

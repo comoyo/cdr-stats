@@ -231,7 +231,9 @@ def cdr_view(request):
     due = ''
     caller = ''
     caller_type = ''
+    caller_filter = ''
     cli = ''
+    cli_filter = ''
     search_tag = 0
     action = 'tabs-1'
     menu = 'on'
@@ -250,6 +252,7 @@ def cdr_view(request):
             request.session['session_accountcode_type'] = ''
             request.session['session_caller'] = ''
             request.session['session_caller_type'] = ''
+            request.session['session_caller_filter'] = ''
             request.session['session_duration'] = ''
             request.session['session_duration_type'] = ''
             request.session['session_q_client_rtt'] = ''
@@ -295,6 +298,10 @@ def cdr_view(request):
             if caller:
                 request.session['session_caller'] = caller
                 request.session['session_caller_type'] = caller_type
+
+            caller_filter = variable_value(request, 'caller_filter')
+            if caller_filter:
+                request.session['session_caller_filter'] = caller_filter
 
             duration = variable_value(request, 'duration')
             duration_type = variable_value(request, 'duration_type')
@@ -382,6 +389,7 @@ def cdr_view(request):
             accountcode_type = request.session.get('session_accountcode_type')
             caller = request.session.get('session_caller')
             caller_type = request.session.get('session_caller_type')
+            caller_filter = request.session.get('session_caller_filter')
             duration = request.session.get('session_duration')
             duration_type = request.session.get('session_duration_type')
             q_client_rtt = request.session.get('session_q_client_rtt')
@@ -418,6 +426,7 @@ def cdr_view(request):
         request.session['session_accountcode_type'] = ''
         request.session['session_caller'] = ''
         request.session['session_caller_type'] = ''
+        request.session['session_caller_filter'] = ''
         request.session['session_duration'] = ''
         request.session['session_duration_type'] = ''
         request.session['session_q_client_rtt'] = ''
@@ -463,6 +472,13 @@ def cdr_view(request):
     cli = mongodb_str_filter(caller, caller_type)
     if cli:
         query_var['caller_id_number'] = cli
+    
+    if caller_filter:
+        if cli:
+            cli['$ne'] = caller_filter
+            query_var['caller_id_number'] = cli
+        else:
+            query_var['caller_id_number'] = {'$ne': caller_filter}
 
     due = mongodb_int_filter(duration, duration_type)
     if due:
@@ -514,6 +530,7 @@ def cdr_view(request):
             'accountcode_type': accountcode_type,
             'caller': caller,
             'caller_type': caller_type,
+            'caller_filter': caller_filter,
             'duration': duration,
             'duration_type': duration_type,
             'q_client_rtt': q_client_rtt,
