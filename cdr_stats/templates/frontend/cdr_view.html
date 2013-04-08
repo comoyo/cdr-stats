@@ -70,17 +70,6 @@
                 <span class="help-inline">{{ form.destination.errors }}</span>
             {% endif %}
           </div>
-          {% if user.is_superuser %}
-          <div class="span4">
-            <label class="control-label" for="id_{{ form.accountcode.name }}">{{ form.accountcode.label }}</label>
-            <div class="input">
-                {{ form.accountcode }}&nbsp;&nbsp;{{ form.accountcode_type }}
-            </div>
-              {% if form.accountcode.errors %}
-                  <span class="help-inline">{{ form.accountcode.errors }}</span>
-              {% endif %}
-          </div>
-          {% endif %}
           <div class="span4">
             <label class="control-label" for="id_{{ form.caller.name }}">{{ form.caller.label }}</label>
             <div class="input">
@@ -251,12 +240,19 @@
                 <th>
                     {% ifequal col_name_with_order.sort_field 'billsec' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "billsec"  %}
-                      <abbr title='{% trans "Bill Seconds" %}'>{{ CDR_COLUMN_NAME.bill }}</abbr>
+                        {{ CDR_COLUMN_NAME.bill }}
                       {% sort_link "<i class='icon-chevron-down'></i>" "-billsec"  %}
                     {% else %}
-                        <abbr title={% trans 'Bill Seconds' %}>
                         {% sort_link CDR_COLUMN_NAME.bill "-billsec"  %}
-                        </abbr>
+                    {% endifequal %}
+                </th>
+                <th>
+                    {% ifequal col_name_with_order.sort_field 'bill_amount' %}
+                      {% sort_link "<i class='icon-chevron-up'></i>" "bill_amount"  %}
+                        {{ CDR_COLUMN_NAME.bill_amount }}
+                      {% sort_link "<i class='icon-chevron-down'></i>" "-bill_amount"  %}
+                    {% else %}
+                        {% sort_link CDR_COLUMN_NAME.bill_amount "-bill_amount"  %}
                     {% endifequal %}
                 </th>
                 <th>
@@ -266,15 +262,6 @@
                       {% sort_link "<i class='icon-chevron-down'></i>" "-hangup_cause_id"  %}
                     {% else %}
                       {% sort_link CDR_COLUMN_NAME.hangup_cause "-hangup_cause_id"  %}
-                    {% endifequal %}
-                </th>
-                <th>
-                    {% ifequal col_name_with_order.sort_field 'accountcode' %}
-                      {% sort_link "<i class='icon-chevron-up'></i>" "accountcode"  %}
-                        {{ CDR_COLUMN_NAME.account }}
-                      {% sort_link "<i class='icon-chevron-down'></i>" "-accountcode"  %}
-                    {% else %}
-                      {% sort_link CDR_COLUMN_NAME.account "-accountcode"  %}
                     {% endifequal %}
                 </th>
                 <th></th>
@@ -305,12 +292,12 @@
                         {{ row.billsec }}
                     {% endif %}
                 </td>
+                <td>{{ row.bill_amount }}</td>
                 <td>
                   {% cache 1800 hangupcause_name row.hangup_cause_id %}
                     {{ row.hangup_cause_id|hangupcause_name }}
                   {% endcache %}
                 </td>
-                <td>{{ row.accountcode }}</td>
                 <td>
                     <div class="flag_icon">
                         {% if row.country_id %}

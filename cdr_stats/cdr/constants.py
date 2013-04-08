@@ -28,6 +28,7 @@ class CDR_COLUMN_NAME(Choice):
     clid = _('CLID')
     destination = _('Destination')
     duration = _('Duration')
-    bill = _('Bill')
+    bill = _('Bill time')
     hangup_cause = _('Hangup cause')
     account = _('Account')
+    bill_amount = _('Bill amount')
