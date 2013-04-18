@@ -90,7 +90,7 @@ class SearchForm(forms.Form):
                                          choices=list(STRING_SEARCH_TYPE_LIST))
     accountcode_type.widget.attrs['class'] = 'input-small'
 
-    caller_filter = forms.CharField(label=_('Filter out Caller ID'), required=False)
+    caller_filter = forms.CharField(label=_('Filter out Caller IDs (,)'), required=False)
 
     duration = forms.CharField(label=_('Duration (Secs)'),
                                required=False)
@@ -116,13 +116,22 @@ class SearchForm(forms.Form):
     q_client_rtt_type.widget.attrs['class'] = 'input-small'
 
 
-    q_client_tx_packet_loss = forms.CharField(label=_('Remote end packet loss (%)'),
+    q_client_tx_packet_loss = forms.CharField(label=_('Remote end peak packet loss (%)'),
                                required=False)
 
     q_client_tx_packet_loss_type = forms.ChoiceField(label='',
                                                      required=False,
                                                      choices=COMPARE_LIST)
     q_client_tx_packet_loss_type.widget.attrs['class'] = 'input-small'
+
+
+    q_c_tx_loss = forms.CharField(label=_('Packet loss (%)'),
+                                  required=False)
+
+    q_c_tx_loss_type = forms.ChoiceField(label='',
+                                         required=False,
+                                         choices=COMPARE_LIST)
+    q_c_tx_loss_type.widget.attrs['class'] = 'input-small'
 
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)

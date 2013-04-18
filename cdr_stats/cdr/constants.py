@@ -25,10 +25,10 @@ class STRING_SEARCH_TYPE_LIST(Choice):
 
 class CDR_COLUMN_NAME(Choice):
     call_date = _('Call-date')
-    clid = _('CLID')
+    clid = _('Caller ID')
     destination = _('Destination')
     duration = _('Duration')
-    bill = _('Bill time')
+    bill = _('Talk time')
     hangup_cause = _('Hangup cause')
     account = _('Account')
     bill_amount = _('Bill amount')

@@ -228,6 +228,8 @@ def cdr_view(request):
     q_client_rtt_type = ''
     q_client_tx_packet_loss = ''
     q_client_tx_packet_loss_type = ''
+    q_c_tx_loss = ''
+    q_c_tx_loss_type = ''
     due = ''
     caller = ''
     caller_type = ''
@@ -259,6 +261,8 @@ def cdr_view(request):
             request.session['session_q_client_rtt_type'] = ''
             request.session['session_q_client_tx_packet_loss'] = ''
             request.session['session_q_client_tx_packet_loss_type'] = ''
+            request.session['session_q_c_tx_loss'] = ''
+            request.session['session_q_c_tx_loss_type'] = ''
             request.session['session_hangup_cause_id'] = ''
             request.session['session_switch_id'] = ''
             request.session['session_direction'] = ''
@@ -320,6 +324,13 @@ def cdr_view(request):
             if q_client_tx_packet_loss:
                 request.session['session_q_client_tx_packet_loss'] = q_client_tx_packet_loss
                 request.session['session_q_client_tx_packet_loss_type'] = q_client_tx_packet_loss_type
+
+
+            q_c_tx_loss = variable_value(request, 'q_c_tx_loss')
+            q_c_tx_loss_type = variable_value(request, 'q_c_tx_loss_type')
+            if q_c_tx_loss:
+                request.session['session_q_c_tx_loss'] = q_c_tx_loss
+                request.session['session_q_c_tx_loss_type'] = q_c_tx_loss_type
 
 
             direction = variable_value(request, 'direction')
@@ -396,6 +407,8 @@ def cdr_view(request):
             q_client_rtt_type = request.session.get('session_q_client_rtt_type')
             q_client_tx_packet_loss = request.session.get('session_q_client_tx_packet_loss')
             q_client_tx_packet_loss_type = request.session.get('session_q_client_tx_packet_loss_type')
+            q_c_tx_loss = request.session.get('session_q_c_tx_loss')
+            q_c_tx_loss_type = request.session.get('session_q_c_tx_loss_type')
             direction = request.session.get('session_direction')
             switch_id = request.session.get('session_switch_id')
             hangup_cause_id = request.session.get('session_hangup_cause_id')
@@ -433,6 +446,8 @@ def cdr_view(request):
         request.session['session_q_client_rtt_type'] = ''
         request.session['session_q_client_tx_packet_loss'] = ''
         request.session['session_q_client_tx_packet_loss_type'] = ''
+        request.session['session_q_c_tx_loss'] = ''
+        request.session['session_q_c_tx_loss_type'] = ''
         request.session['session_hangup_cause_id'] = ''
         request.session['session_switch_id'] = ''
         request.session['session_direction'] = ''
@@ -472,10 +487,12 @@ def cdr_view(request):
     cli = mongodb_str_filter(caller, caller_type)
     if cli:
         query_var['caller_id_number'] = cli
-    
+
     if caller_filter:
         if cli:
-            cli['$ne'] = caller_filter
+            callIdList = str(caller_filter).split(',')
+            for entry in callIdList:
+                cli['$ne'] = entry.trim()
             query_var['caller_id_number'] = cli
         else:
             query_var['caller_id_number'] = {'$ne': caller_filter}
@@ -491,6 +508,11 @@ def cdr_view(request):
     qty_tx_p_l = mongodb_int_filter(q_client_tx_packet_loss, q_client_tx_packet_loss_type)
     if qty_tx_p_l:
         query_var['client_max_tx_packet_loss'] = daily_report_query_var['client_max_tx_packet_loss'] = qty_tx_p_l
+
+    qty_tx_l = mongodb_int_filter(q_c_tx_loss, q_c_tx_loss_type)
+    if qty_tx_l:
+        query_var['client_rx_fraction_loss'] = daily_report_query_var['client_rx_fraction_loss'] = qty_tx_l
+        query_var['midee_statistics.connections.c_tx_loss'] = daily_report_query_var['midee_statistics.connections.c_tx_loss'] = qty_tx_l
 
     if switch_id and int(switch_id) != 0:
         daily_report_query_var['metadata.switch_id'] = int(switch_id)
@@ -537,6 +559,8 @@ def cdr_view(request):
             'q_client_rtt_type': q_client_rtt_type,
             'q_client_tx_packet_loss': q_client_tx_packet_loss,
             'q_client_tx_packet_loss_type': q_client_tx_packet_loss_type,
+            'q_c_tx_loss': q_c_tx_loss,
+            'q_c_tx_loss_type': q_c_tx_loss_type,
             'result': result,
             'direction': direction,
             'hangup_cause': hangup_cause_id,

@@ -156,6 +156,15 @@
                     <span class="help-inline">{{ form.q_client_tx_packet_loss.errors }}</span>
                 {% endif %}
              </div>
+             <div class="span4">
+                <label class="control-label" for="id_{{ form.q_c_tx_loss.name }}">{{ form.q_c_tx_loss.label }}</label>
+                <div class="input">
+                    {{ form.q_c_tx_loss }}&nbsp;&nbsp;{{ form.q_c_tx_loss_type }}
+                </div>
+                {% if form.q_c_tx_loss.errors %}
+                    <span class="help-inline">{{ form.q_c_tx_loss.errors }}</span>
+                {% endif %}
+             </div>
          </div>
      </div>
   </div>
