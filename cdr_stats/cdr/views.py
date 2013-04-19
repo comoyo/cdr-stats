@@ -489,13 +489,23 @@ def cdr_view(request):
         query_var['caller_id_number'] = cli
 
     if caller_filter:
+        temp = []
+        filt = {}
+
         if cli:
-            callIdList = str(caller_filter).split(',')
-            for entry in callIdList:
-                cli['$ne'] = entry.trim()
-            query_var['caller_id_number'] = cli
+            filt = cli
+
+        callIdList = str(caller_filter).split(',')
+        for entry in callIdList:
+            temp.append(entry.strip())
+
+        if len(callIdList) > 1:
+            filt['$nin'] = temp
         else:
-            query_var['caller_id_number'] = {'$ne': caller_filter}
+            filt['$ne'] = caller_filter.strip()
+
+	query_var['caller_id_number'] = filt
+        
 
     due = mongodb_int_filter(duration, duration_type)
     if due:
