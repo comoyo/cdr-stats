@@ -41,7 +41,9 @@
     Local end packets recieved: {{ element.client_rx_packets }}<br>
     Local end packets lost : {{ element.client_rx_packets_lost }}<br>
     Local end packets sent: {{ element.client_tx_packets }}<br>
-   
+    {% if element.client_hangup %}
+        Client hangup reason: {{ element.client_hangup }}<br>
+    {% endif %}
     <p/>
     <p/>
     <b>Midee Statistics</b><br>
