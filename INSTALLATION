@@ -1,40 +1,94 @@
-When developing for cdr-stats, use a virtualbox and not your system so that you just can create a new machine if installation fails.
 
-To install on a clean machine fetch the install script from github.
+When developing for cdr-stats, use a virtualbox and not your system so that you
+just can create a new machine if installation fails.
 
-    wget –no-check-certificate https://raw.github.com/comoyo/cdr-stats/master/install/install-cdr-stats.sh -O install-cdr-stats.sh
+To install on a clean machine fetch the install script from github. You can run
+this script from anywhere, and it will install the latest version from the
+repository, not the local copy where you might be reading this document :-)
 
-run it:
-	
-    sudo bash install-cdr-stats.sh
-	
-During the installation you will be asked to chose between Freeswitch/Asterisk, chose Freeswitch
-Then chose to install all.
+    ~> wget --no-check-certificate https://raw.github.com/comoyo/cdr-stats/master/install/install-cdr-stats.sh -O install-cdr-stats.sh
+    ~> sudo bash install-cdr-stats.sh
 
-Sometimes the installation will fail, so you need to check that the install was a success. This
-can be done by using telnet to the default installation port 8008.
+During the installation you will be asked to chose between Freeswitch/Asterisk,
+chose
+    1) Freeswitch
+Accept the license.
+    YES
+Then chose to install everything, with
+    1) Install All.
 
-    sudo telnet localhost 8008
+The installation will download a lot of required components, so this takes a
+while. After a while you will need to configure access to a user
+   User name: (Blank for root)
+   Email: <your-email-address>
+   Password: ******
+   Repeat password: ******
+
+The installation will then try to install all the necessary components.
+
+Sometimes the installation will fail, so you need to check that the install was
+a success. This can be done by using telnet to the default installation port
+8008.
+
+    ~> sudo telnet localhost 8008
     GET
+    ^D (Ctrl+D)
 
-And check that what you get looks like the correct website.
-If the installation fails, create a new machine and install again.
+And check that what you get looks like the correct website. If the installation
+fails, create a new machine and install again, as there is no uninstall method.
 
-Then you need to change /usr/share/cdr_stats/setting_local.py so that it points to our mongodb,
-and add the username and password for MongoDb to the same file.
-That is done by changing the MONGO_CDRSTATS URI, USER and PASSWORD at the end of the file.
-	
-If you install to staging/prod you need to setup port forwarding so that we can access the server on port 80.
+Then you need to change /usr/share/cdr_stats/setting_local.py so that it points
+to our mongodb, and add the username and password for MongoDb to the same file.
 
-    iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
-    iptables -A INPUT -i eth0 -p tcp --dport 8008 -j ACCEPT
-    iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8008
+That is done by changing the MONGO_CDRSTATS URI, USER and PASSWORD at the end
+of the file. For example for staging:
 
-Then fix so that the iptable is restored by default on reboot, for example like this:
+MONGO_CDRSTATS = {
+    'DB_NAME': 'cdr-stats',
+    'HOST': 'localhost',
+    'PORT': 27017,
+    'CDR_COMMON': 'cdr_common',
+    'DAILY_ANALYTIC': 'daily_analytic',
+    'MONTHLY_ANALYTIC': 'monthly_analytic',
+    'CONC_CALL': 'concurrent_call',
+    'CONC_CALL_AGG': 'concurrent_call_aggregate',
+    'URI': 'mongodb://aewa-staging-mongodb:29017,aewb-staging-mongodb:29017,aewc-staging-mongodb:29017',
+    'USER': 'genieCdrUser',
+    'PASSWORD': 'access2Stats123'
+}
+
+For production, the port numbers of the mongodb servers should be 27017, not
+29017 as for staging.
+
+If you install to staging/prod you need to setup port forwarding so that we can
+access the server on port 80.
+
+    ~# /sbin/iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
+    ~# /sbin/iptables -A INPUT -i eth0 -p tcp --dport 8008 -j ACCEPT
+    ~# /sbin/iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8008
+
+Then fix so that the iptable is restored by default on reboot, for example
+like this:
 
     https://help.ubuntu.com/community/IptablesHowTo#Solution_.232_.2BAC8-etc.2BAC8-network.2BAC8-if-pre-up.d_and_...2BAC8-if-post-down.d
 
-If you need to update an already installed version of cdr-stats. Copy the modified files into the correct location at /usr/share/cdr_stats
-Do not try to run the installscript again, that will ruin the installation.
+If you need to update an already installed version of cdr-stats. Copy the
+modified files into the correct location at /usr/share/cdr_stats Do not try to
+run the installscript again, that will ruin the installation.
 
-There is no uninstall script. If things go wrong start over with a clean machine.
+There is no uninstall script. If things go wrong start over with a clean
+machine.
+
+After setup is complete, restart the cdr-stats service and apache:
+   ~> sudo service cdr-stats-celeryd restart
+   ~> sudo service apache2 restart
+
+Open your web browser to the local serice at port 8008 to test, e.g.:
+   ~> firefox http://localhost:8008 &
+
+Login with the username and password that was used in the installation process
+above: (root/******)
+
+To view Detailed Stats, go to "Analytics -> Search" and press the maginifier
+glass (tool tip) "Show Details".
+
