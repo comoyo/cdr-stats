@@ -521,7 +521,7 @@ def cdr_view(request):
 
     qty_tx_l = mongodb_int_filter(q_c_tx_loss, q_c_tx_loss_type)
     if qty_tx_l:
-        query_var['client_rx_fraction_loss'] = daily_report_query_var['client_rx_fraction_loss'] = qty_tx_l
+        # query_var['client_rx_fraction_loss'] = daily_report_query_var['client_rx_fraction_loss'] = qty_tx_l
         query_var['midee_statistics.connections.c_tx_loss'] = daily_report_query_var['midee_statistics.connections.c_tx_loss'] = qty_tx_l
 
     if switch_id and int(switch_id) != 0:
