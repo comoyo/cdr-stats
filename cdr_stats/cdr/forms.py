@@ -133,6 +133,14 @@ class SearchForm(forms.Form):
                                          choices=COMPARE_LIST)
     q_c_tx_loss_type.widget.attrs['class'] = 'input-small'
 
+    kiss_customer_id = forms.CharField(label=_('Kiss Customer ID'),
+                                  required=False)
+
+    kiss_customer_id_type = forms.ChoiceField(label='',
+                                         required=False,
+                                         choices=COMPARE_LIST)
+    kiss_customer_id_type.widget.attrs['class'] = 'input-small'
+
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
         self.fields['switch'].choices = sw_list_with_all()

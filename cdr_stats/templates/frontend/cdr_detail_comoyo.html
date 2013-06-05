@@ -44,6 +44,9 @@
     {% if element.client_hangup %}
         Client hangup reason: {{ element.client_hangup }}<br>
     {% endif %}
+    {% if element.caller_id_number_hash %}
+        Kiss's Customer ID: {{ element.caller_id_number_hash }}<br>
+    {% endif %}
     <p/>
     <p/>
     <b>Midee Statistics</b><br>
