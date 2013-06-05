@@ -27,6 +27,9 @@
     {% if element.bill_sku %}
         Bill Method : {{ element.bill_sku }}<br>
     {% endif %}
+    {% if element.caller_id_number_hash %}
+        Kiss's Customer ID: {{ element.caller_id_number_hash }}<br>
+    {% endif %}
 
     <p/>
     <p/>
@@ -43,9 +46,6 @@
     Local end packets sent: {{ element.client_tx_packets }}<br>
     {% if element.client_hangup %}
         Client hangup reason: {{ element.client_hangup }}<br>
-    {% endif %}
-    {% if element.caller_id_number_hash %}
-        Kiss's Customer ID: {{ element.caller_id_number_hash }}<br>
     {% endif %}
     <p/>
     <p/>
