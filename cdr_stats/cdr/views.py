@@ -527,10 +527,9 @@ def cdr_view(request):
     if qty_tx_p_l:
         query_var['client_max_tx_packet_loss'] = daily_report_query_var['client_max_tx_packet_loss'] = qty_tx_p_l
 
-    kiss_cid = mongodb_str_filter(kiss_customer_id, '1')
+    if kiss_customer_id:
+        query_var['caller_id_number_hash'] = daily_report_query_var['caller_id_number_hash'] = kiss_customer_id
 
-    if kiss_cid:
-        query_var['caller_id_number_hash'] = daily_report_query_var['caller_id_number_hash'] = kiss_cid
 
     qty_tx_l = mongodb_int_filter(q_c_tx_loss, q_c_tx_loss_type)
     if qty_tx_l:
