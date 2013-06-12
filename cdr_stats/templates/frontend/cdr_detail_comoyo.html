@@ -101,6 +101,15 @@
             {% if item == "c_remote_ip" %}
                 Remote/SIP Trunk IP:PORT : {{ connection.c_remote_ip }}<br>
             {% endif %}
+            {% if item == "c_client_rtt_min" %}
+                Midee to client RTT Min : {{ connection.c_client_rtt_min }} ms<br>
+            {% endif %}
+            {% if item == "c_client_rtt_avg" %}
+                Midee to client RTT Average : {{ connection.c_client_rtt_avg }} ms<br>
+            {% endif %}
+            {% if item == "c_client_rtt_max" %}
+                Midee to client RTT Max : {{ connection.c_client_rtt_max }} ms<br>
+            {% endif %}
         {% endfor %}
     <p/>
     {% endfor %}
