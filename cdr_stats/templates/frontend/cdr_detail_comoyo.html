@@ -4,7 +4,7 @@
 {% block content %}
 
 {% for element in row %}
-    <b>General</b><br>
+    <font size="4"><b>General</b><br></font>
     From number : {{ element.caller_id_number }}<br>
     To number : {{ element.destination_number }}<br>
     Call-ID : {{ element.call_id }}<br>
@@ -19,10 +19,10 @@
         Duration : {{ element.duration }} Sec<br>
     {% endif %}
     {% if element.billsec %}
-        BillSec : {{ element.billsec }} Sec<br>
+        Talk time : {{ element.billsec }} Sec<br>
     {% endif %}
     {% if element.bill_amount %}
-        Bill Amount : {{ element.bill_amount }}<br>
+        Billed Amount : {{ element.bill_amount }}<br>
     {% endif %}
     {% if element.bill_sku %}
         Bill Method : {{ element.bill_sku }}<br>
@@ -31,39 +31,66 @@
         Kiss's Customer ID: {{ element.caller_id_number_hash }}<br>
     {% endif %}
 
-    <p/>
-    <p/>
-    <b>Client Statistics</b><br>
-    Maximum roundtrip delay : {{ element.client_max_rtt }}<br>
-    Average roundtrip delay : {{ element.client_avg_rtt }}<br>
-    Minimum roundtrip delay : {{ element.client_min_rtt }}<br>
-    Remote end max packet loss : {{ element.client_max_tx_packet_loss }}<br>
-    Remote end average packet loss : {{ element.client_avg_tx_packet_loss }}<br>
-    Remote end min packet loss : {{ element.client_min_tx_packet_loss }}<br>
-    Local end percent of lost packets : {{ element.client_rx_fraction_loss }}<br>
-    Local end packets recieved: {{ element.client_rx_packets }}<br>
-    Local end packets lost : {{ element.client_rx_packets_lost }}<br>
-    Local end packets sent: {{ element.client_tx_packets }}<br>
-    {% if element.client_hangup %}
-        Client hangup reason: {{ element.client_hangup }}<br>
+    {% if element.client_max_rtt %}
+        <p/>
+        <p/>
+        <p/>
+        <font size="4"><b>IP End-to-end Statistics</b><br></font>
+        Max roundtrip delay : {{ element.client_max_rtt }} ms<br>
+        Far End packet loss : {{ element.client_max_tx_packet_loss }}<br>
+
+
+        <p/>
+        <b>Far End to Client stats</b><br>
+        Client average of packet loss : {{ element.client_rx_fraction_loss }} %<br>
+        Client packets recieved : {{ element.client_rx_packets }}<br>
+        Client packets lost : {{ element.client_rx_packets_lost }}<br>
+        Client packets sent: {{ element.client_tx_packets }}<br>
+        {% if element.client_hangup %}
+            Client hangup reason (SIP) : {{ element.client_hangup }}<br>
+        {% endif %}
     {% endif %}
+
+    {% if element.client_call_quality.q_avg %}
+        <p/>
+        <p/>
+        <b>Q Values (end user perceived quality)</b><br>
+        Q Distribution:</b><br>
+        100: {{ element.client_call_quality.q_100 }} &nbsp
+        90: {{ element.client_call_quality.q_90 }} &nbsp
+        80: {{ element.client_call_quality.q_80 }} &nbsp
+        70: {{ element.client_call_quality.q_70 }} &nbsp
+        60: {{ element.client_call_quality.q_60 }} &nbsp
+        50: {{ element.client_call_quality.q_50 }} &nbsp
+        40: {{ element.client_call_quality.q_40 }} &nbsp
+        30: {{ element.client_call_quality.q_30 }} &nbsp
+        20: {{ element.client_call_quality.q_20 }} &nbsp
+        10: {{ element.client_call_quality.q_10 }} &nbsp<br>
+        Average Q value: {{ element.client_call_quality.q_avg }}<br>
+        <p/>
+    {% endif %}
+
     <p/>
     <p/>
-    <b>Midee Statistics</b><br>
-    Username : {{ element.midee_statistics.username }}<br>
-    Uptime : {{ element.midee_statistics.uptime }}<br>
-    Footee_id : {{ element.midee_statistics.footee_id }}<br>
-    Counter_connections : {{ element.midee_statistics.counter_connections }}<br>
- 
     <p/>
+    {% if element.midee_statistics.counter_connections  %}
+        <font size="4"><b>Media Relay (Midee Statistics)</b><br></font>
+        Username : {{ element.midee_statistics.username }}<br>
+        Uptime : {{ element.midee_statistics.uptime }}<br>
+        Footee_id : {{ element.midee_statistics.footee_id }}<br>
+        Counter_connections : {{ element.midee_statistics.counter_connections }}<br>
+    {% endif %}
+
+    <p/>
+
     {% for connection in element.midee_statistics.connections %}
         {% for item in connection %}
             {% if item == "c_type" %}
                 {% if connection.c_type == "internal" %}
-                    Direction : Midee to Client<br>
+                    <b>Direction : Far End to Media Relay</b><br>
                 {% endif %}
                 {% if connection.c_type == "external" %}
-                    Direction : Midee to Remote/Sip Trunk<br>
+                    <b>Direction : Client to Media Relay</b><br>
                 {% endif %}
             {% endif %}
             {% if item == "c_transport" %}
@@ -77,8 +104,8 @@
             {% endif %}
             {% if item == "c_client_public_ip" %}
                 Client public IP : 
-				<A HREF="http://www.geoiptool.com/en/?IP={{ connection.c_client_public_ip|slice:":-6"}}" target="_blank">{{ connection.c_client_public_ip }}</a>
-				<A HREF="http://api.hostip.info/get_html.php?ip={{ connection.c_client_public_ip }}" target="_blank"> Lookup IP origin</a><br>
+                <A HREF="http://www.geoiptool.com/en/?IP={{ connection.c_client_public_ip|slice:":-6"}}" target="_blank">{{ connection.c_client_public_ip }}</a>
+                <A HREF="http://api.hostip.info/get_html.php?ip={{ connection.get_first }}" target="_blank"> Lookup IP origin</a><br>
             {% endif %}
             {% if item == "c_tx_packets" %}
                 Packets sent : {{ connection.c_tx_packets }}<br>
@@ -90,10 +117,10 @@
                 Lost packets : {{ connection.c_tx_lost_packets }}<br>
             {% endif %}
             {% if item == "c_tx_loss" %}
-                Percent of lost packets : {{ connection.c_tx_loss }}<br>
+                Packet loss : {{ connection.c_tx_loss }} %<br>
             {% endif %}
             {% if item == "c_tx_ordered_packets" %}
-                Ordered packets : {{ connection.c_tx_ordered_packets }}<br>
+                Out-of-sequence packets : {{ connection.c_tx_ordered_packets }}<br>
             {% endif %}
             {% if item == "c_tx_expected_packets" %}
                 Expected packets : {{ connection.c_tx_expected_packets }}<br>
@@ -113,7 +140,7 @@
         {% endfor %}
     <p/>
     {% endfor %}
-   
+
 {% endfor %}
 
 {% endblock %}
