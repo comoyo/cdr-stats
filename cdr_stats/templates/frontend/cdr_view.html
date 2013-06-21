@@ -34,24 +34,17 @@
         <div class="span12">
             <div class="row">
                 <div class="span4">
-                    <label class="control-label" for="id_{{ form.from_date.name }}">{{ form.from_date.label }}</label>
+                    <label class="control-label" for="id_{{ form.from_date.name }}" title="Start date for the search">{{ form.from_date.label }}</label>
                     <div class="input">
                         {{ form.from_date }}
                         <span class="help-block">{{ form.from_date.help_text|safe }} </span>
                     </div>
                 </div>
                 <div class="span4">
-                    <label class="control-label" for="id_{{ form.to_date.name }}">{{ form.to_date.label }}</label>
+                    <label class="control-label" for="id_{{ form.to_date.name }}" title="End date for the search">{{ form.to_date.label }}</label>
                     <div class="input">
                         {{ form.to_date }}
                         <span class="help-block">{{ form.to_date.help_text|safe }} </span>
-                    </div>
-                </div>
-                <div class="span4">
-                    <label class="control-label" for="id_{{ form.switch.name }}">{{ form.switch.label }}</label>
-                    <div class="input">
-                        {{ form.switch }}
-                        <span class="help-block">{{ form.switch.help_text|safe }} </span>
                     </div>
                 </div>
             </div>
@@ -62,7 +55,7 @@
     <div class="span12">
       <div class="row">
           <div class="span4">
-            <label class="control-label" for="id_{{ form.destination.name }}">{{ form.destination.label }}</label>
+            <label class="control-label" for="id_{{ form.destination.name }}" title="End point phone number, starts with +">{{ form.destination.label }}</label>
             <div class="input">
                 {{ form.destination }}&nbsp;&nbsp;{{ form.destination_type }}
             </div>
@@ -71,7 +64,7 @@
             {% endif %}
           </div>
           <div class="span4">
-            <label class="control-label" for="id_{{ form.caller.name }}">{{ form.caller.label }}</label>
+            <label class="control-label" for="id_{{ form.caller.name }}" title="Callers phone number, starts with +">{{ form.caller.label }}</label>
             <div class="input">
               {{ form.caller }}&nbsp;&nbsp;{{ form.caller_type }}
             </div>
@@ -80,7 +73,7 @@
             {% endif %}
           </div>
           <div class="span4">
-            <label class="control-label" for="id_{{ form.caller_filter.name }}">{{ form.caller_filter.label }}</label>
+            <label class="control-label" for="id_{{ form.caller_filter.name }}"  title="Filter out Caller IDs from the search, comma separeted list of phone numbers">{{ form.caller_filter.label }}</label>
             <div class="input">
               {{ form.caller_filter }}
             </div>
@@ -93,19 +86,19 @@
     <div class="span12">
         <div class="row">
             <div class="span4">
-                <label class="control-label" for="id_{{ form.direction.name }}">{{ form.direction.label }}</label>
+                <label class="control-label" for="id_{{ form.direction.name }}" title="Call direction">{{ form.direction.label }}</label>
                 <div class="input">
                     {{ form.direction }}
                 </div>
             </div>
             <div class="span4">
-                <label class="control-label" for="id_{{ form.hangup_cause.name }}">{{ form.hangup_cause.label }}</label>
+                <label class="control-label" for="id_{{ form.hangup_cause.name }}" title="End date for the search">{{ form.hangup_cause.label }}</label>
                 <div class="input">
                   {{ form.hangup_cause }}
                 </div>
             </div>
             <div class="span4">
-                <label class="control-label" for="id_{{ form.duration.name }}">{{ form.duration.label }}</label>
+                <label class="control-label" for="id_{{ form.duration.name }}" title="Total call length">{{ form.duration.label }}</label>
                 <div class="input">
                     {{ form.duration }}&nbsp;&nbsp;{{ form.duration_type }}
                 </div>
@@ -120,16 +113,22 @@
      <div class="span12">
          <div class="row">
              <div class="span4">
-                 <label class="control-label" for="id_{{ form.country_id.name }}">{{ form.country_id.label }}</label>
+                 <label class="control-label" for="id_{{ form.country_id.name }}" title="Country of the call destination">{{ form.country_id.label }}</label>
                  <div class="input">
                      {{ form.country_id }}
                      <span class="help-block">{{ form.country_id.help_text|safe }} </span>
                  </div>
              </div>
              <div class="span4">
-                 <label class="control-label" for="id_{{ form.result.name }}">{{ form.result.label }}</label>
+                 <label class="control-label" for="id_{{ form.result.name }}" title="Talk time shown in minutes or seconds">{{ form.result.label }}</label>
                  <div class="input">
                      {{ form.result|removetags:"ul li label"|safe }}
+                 </div>
+             </div>
+             <div class="span4">
+                 <label class="control-label" for="id_{{ form.kiss_customer_id.name }}" title="Search for users ids with the same formas as used in KissMetrics">{{ form.kiss_customer_id.label }}</label>
+                 <div class="input">
+                     {{ form.kiss_customer_id }}&nbsp;&nbsp;
                  </div>
              </div>
          </div>
@@ -138,8 +137,8 @@
   <div class="row">
      <div class="span12">
          <div class="row">
-             <div class="span3">
-                <label class="control-label" for="id_{{ form.q_client_rtt.name }}">{{ form.q_client_rtt.label }}</label>
+             <div class="span4">
+                <label class="control-label" for="id_{{ form.q_client_rtt.name }}" title="Max roundtrip time IP End-to-end">{{ form.q_client_rtt.label }}</label>
                 <div class="input">
                     {{ form.q_client_rtt }}&nbsp;&nbsp;{{ form.q_client_rtt_type }}
                 </div>
@@ -147,8 +146,8 @@
                     <span class="help-inline">{{ form.q_client_rtt.errors }}</span>
                 {% endif %}
              </div>
-             <div class="span3">
-                <label class="control-label" for="id_{{ form.q_client_tx_packet_loss.name }}">{{ form.q_client_tx_packet_loss.label }}</label>
+             <div class="span4">
+                <label class="control-label" for="id_{{ form.q_client_tx_packet_loss.name }}" title="Client average percent of packets lost">{{ form.q_client_tx_packet_loss.label }}</label>
                 <div class="input">
                     {{ form.q_client_tx_packet_loss }}&nbsp;&nbsp;{{ form.q_client_tx_packet_loss_type }}
                 </div>
@@ -156,20 +155,14 @@
                     <span class="help-inline">{{ form.q_client_tx_packet_loss.errors }}</span>
                 {% endif %}
              </div>
-             <div class="span3">
-                <label class="control-label" for="id_{{ form.q_c_tx_loss.name }}">{{ form.q_c_tx_loss.label }}</label>
+             <div class="span4">
+                <label class="control-label" for="id_{{ form.q_c_tx_loss.name }}" title="Media Relay Statistics, percent of packets lost">{{ form.q_c_tx_loss.label }}</label>
                 <div class="input">
                     {{ form.q_c_tx_loss }}&nbsp;&nbsp;{{ form.q_c_tx_loss_type }}
                 </div>
                 {% if form.q_c_tx_loss.errors %}
                     <span class="help-inline">{{ form.q_c_tx_loss.errors }}</span>
                 {% endif %}
-             </div>
-             <div class="span3">
-                 <label class="control-label" for="id_{{ form.kiss_customer_id.name }}">{{ form.kiss_customer_id.label }}</label>
-                 <div class="input">
-                     {{ form.kiss_customer_id }}&nbsp;&nbsp;
-                 </div>
              </div>
          </div>
      </div>
@@ -216,7 +209,7 @@
         <table class="table table-striped table-bordered table-condensed">
             <thead>
             <tr>
-                <th>
+                <th title="Start time for the call">
                     {% ifequal col_name_with_order.sort_field 'start_uepoch' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "start_uepoch"  %}
                         {{ CDR_COLUMN_NAME.call_date }}
@@ -225,7 +218,7 @@
                       {% sort_link CDR_COLUMN_NAME.call_date "-start_uepoch"  %}
                     {% endifequal %}
                 </th>
-                <th>
+                <th title="Caller ID for caller">
                     {% ifequal col_name_with_order.sort_field 'caller_id_number' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "caller_id_number"  %}
                         {{ CDR_COLUMN_NAME.clid }}
@@ -234,7 +227,7 @@
                       {% sort_link CDR_COLUMN_NAME.clid "-caller_id_number"  %}
                     {% endifequal %}
                 </th>
-                <th>
+                <th title="Called caller ID">
                     {% ifequal col_name_with_order.sort_field 'destination_number' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "destination_number"  %}
                         {{ CDR_COLUMN_NAME.destination }}
@@ -243,7 +236,7 @@
                       {% sort_link CDR_COLUMN_NAME.destination "-destination_number"  %}
                     {% endifequal %}
                 </th>
-                <th>
+                <th title="Total duration of the call, including setup time">
                     {% ifequal col_name_with_order.sort_field 'duration' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "duration"  %}
                         {{ CDR_COLUMN_NAME.duration }}
@@ -252,7 +245,7 @@
                       {% sort_link CDR_COLUMN_NAME.duration "-duration"  %}
                     {% endifequal %}
                 </th>
-                <th>
+                <th title="Total duration of the connected call">
                     {% ifequal col_name_with_order.sort_field 'billsec' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "billsec"  %}
                         {{ CDR_COLUMN_NAME.bill }}
@@ -261,7 +254,7 @@
                         {% sort_link CDR_COLUMN_NAME.bill "-billsec"  %}
                     {% endifequal %}
                 </th>
-                <th>
+                <th title="Cost of the call. Only applicable for users with TVOIP rights">
                     {% ifequal col_name_with_order.sort_field 'bill_amount' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "bill_amount"  %}
                         {{ CDR_COLUMN_NAME.bill_amount }}
@@ -270,7 +263,7 @@
                         {% sort_link CDR_COLUMN_NAME.bill_amount "-bill_amount"  %}
                     {% endifequal %}
                 </th>
-                <th>
+                <th title="Hangup reason">
                     {% ifequal col_name_with_order.sort_field 'hangup_cause_id' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "hangup_cause_id"  %}
                         {{ CDR_COLUMN_NAME.hangup_cause }}
@@ -321,11 +314,6 @@
                             {% endcache %}
                         {% else %}
                             <img src="{{STATIC_URL}}cdr-stats/icons/world.png" class="elemtooltip" title="{% trans "World" %}">
-                        {% endif %}
-                        {% if row.authorized == 1  %}
-                            <img src="{{STATIC_URL}}cdr-stats/icons/flag_green.png" class="elemtooltip" title="{% trans "Authorized call" %}"/>
-                        {% else %}
-                            <img src="{{STATIC_URL}}cdr-stats/icons/flag_red.png" class="elemtooltip" title="{% trans "Unauthorized call" %}"/>
                         {% endif %}
                         {% ifequal row.direction 'inbound' %}
                             <img src="{{STATIC_URL}}cdr-stats/icons/door_in.png" title="{{ row.direction|capfirst }} {% trans "call" %}" class="elemtooltip"/>

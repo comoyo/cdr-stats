@@ -5,52 +5,65 @@
 
 {% for element in row %}
     <font size="4"><b>General</b><br></font>
-    From number : {{ element.caller_id_number }}<br>
-    To number : {{ element.destination_number }}<br>
-    Call-ID : {{ element.call_id }}<br>
-    Start : {{ element.start_uepoch|date:"r" }}<br>
-    End : {{ element.end_uepoch|date:"r" }}<br>
+    <text title="Caller ID for caller">From number :</text> {{ element.caller_id_number }}<br>
+    <text title="Called Number">To number :</text> {{ element.destination_number }}<br>
+    <text title="Internal ID">Call-ID :</text> {{ element.call_id }}<br>
+    <text title="Start of the call">Start :</text> {{ element.start_uepoch|date:"r" }}<br>
+    <text title="End of the call">End :</text> {{ element.end_uepoch|date:"r" }}<br>
     {% if element.answer_uepoch %}
-        Answer : {{ element.answer_uepoch|date:"r" }}<br>
+        <text title="When the B party picked up the call (answered)">Answer :</text> {{ element.answer_uepoch|date:"r" }}<br>
     {% else %}
-        No Answer<br>
+        <text title="The call was not picked up">No Answer</text><br>
     {% endif %}
     {% if element.duration %}
-        Duration : {{ element.duration }} Sec<br>
+        <text title="Total duration of the call">Duration :</text> {{ element.duration }} Sec<br>
     {% endif %}
     {% if element.billsec %}
-        Talk time : {{ element.billsec }} Sec<br>
+        <text title="Total duration of the connected call">Talk time :</text> {{ element.billsec }} Sec<br>
     {% endif %}
     {% if element.bill_amount %}
-        Billed Amount : {{ element.bill_amount }}<br>
+        <text title="The billed amount for the call. Only applicable if we sell per minute, otherwise ignore">Billed Amount :</text> {{ element.bill_amount }}<br>
     {% endif %}
     {% if element.bill_sku %}
-        Bill Method : {{ element.bill_sku }}<br>
+        <text title="Type of subscription used">Bill Method :</text> {{ element.bill_sku }}<br>
     {% endif %}
     {% if element.caller_id_number_hash %}
-        Kiss's Customer ID : {{ element.caller_id_number_hash }}<br>
+        <text title="Internal ID for KissMetric data">Kiss's Customer ID :</text> {{ element.caller_id_number_hash }}<br>
     {% endif %}
 
     <p><br></p>
     <font size="4"><b>IP End-to-end Statistics</b><br></font>
-    Max roundtrip delay : {{ element.client_max_rtt }} ms<br>
-    Far End packet loss : {{ element.client_max_tx_packet_loss }}<br>
+    <text title="Maximum roundtrip delay, measured from the Client to the IP end-point that usually is a SIP gateway or another IP client. The delay from the gateway to the GSM mobile is not considered">
+    Max roundtrip delay :</text> {{ element.client_max_rtt }} ms<br>
+    <text title="Average roundtrip delay, measured from the Client to the IP end-point that usually is a SIP gateway or another IP client. The delay from the gateway to the GSM mobile is not considered. Below 250 ms is good and above 400/500 ms Is considered as poor">
+    Average roundtrip delay :</text> {{ element.client_avg_rtt }} ms<br>
+    <text title="Min roundtrip delay, measured from the Client to the IP end-point that usually is a SIP gateway or another IP client. The delay from the gateway to the GSM mobile is not considered">
+    Minimum roundtrip delay :</text> {{ element.client_min_rtt }} ms<br>
 
 
     <p/>
-    <b>Far End to Client stats</b><br>
+    <b title="Measured quality of sent packets to the far-end. The far-end can be SIP gateway or an IP client.">Client to Far End stats</b><br>
+    Far End max packet loss : {{ element.client_max_tx_packet_loss }}<br>
+    Far End average packet loss : {{ element.client_avg_tx_packet_loss }}<br>
+    Far End min packet loss : {{ element.client_min_tx_packet_loss }}<br>
+
+    <p/>
+    <b title="Measured the quality at the client (near-end) IP side Measured quality of sent packets to the client (near-end) IP side">Far End to Client stats</b><br>
     Client average of packet loss : {{ element.client_rx_fraction_loss }} %<br>
     Client packets recieved : {{ element.client_rx_packets }}<br>
     Client packets lost : {{ element.client_rx_packets_lost }}<br>
     Client packets sent : {{ element.client_tx_packets }}<br>
     {% if element.client_hangup %}
-        Client hangup reason (SIP) : {{ element.client_hangup }}<br>
+        <text title="Based on SIP reponse code (http://en.wikipedia.org/wiki/List_of_SIP_response_codes). 200 is a successful call hangup/completion">
+        Client hangup reason (SIP) :</text> {{ element.client_hangup }}<br>
     {% endif %}
 
     {% if element.client_call_quality.q_avg %}
         <p/>
         <p/>
-        <b>Q Values (end user perceived quality)</b><br>
+        <b title="The Q value is a combined value that represents the perceived quality to the end user. The value is defined based on the up- and downlink packet loss, round-trip latency (delay) and jitter (defined as a variation in the delay of received packets)">
+        Q Values (end user perceived quality)</b><br>
+
         Q Distribution:</b><br>
         100: {{ element.client_call_quality.q_100 }} &nbsp
         90: {{ element.client_call_quality.q_90 }} &nbsp
@@ -62,13 +75,13 @@
         30: {{ element.client_call_quality.q_30 }} &nbsp
         20: {{ element.client_call_quality.q_20 }} &nbsp
         10: {{ element.client_call_quality.q_10 }} &nbsp<br>
-        Average Q value: {{ element.client_call_quality.q_avg }}<br>
+        <text title="Q value above 60 is considered as good/fair and values below 30 is considered as poor">Average Q value:</text> {{ element.client_call_quality.q_avg }}<br>
         <p/>
     {% endif %}
 
     <p><br></p>
     {% if element.midee_statistics.counter_connections  %}
-        <font size="4"><b>Media Relay (Midee Statistics)</b><br></font>
+        <font size="4"><b title="The Media Relay is the media server that connects to the client and the far-end">Media Relay (Midee Statistics)</b><br></font>
         Username : {{ element.midee_statistics.username }}<br>
         Uptime : {{ element.midee_statistics.uptime }}<br>
         Footee_id : {{ element.midee_statistics.footee_id }}<br>
@@ -88,7 +101,8 @@
                 {% endif %}
             {% endif %}
             {% if item == "c_transport" %}
-                Transport : {{ connection.c_transport }}<br>
+                <text title="If transport from the client is based on TCP it is most likely that we have to traverse to more or less complicated firewalls and NAT. If TCP is used instead of UDP this also will increase the roundtrip delay/latency and packet loss.">
+                Transport :</text> {{ connection.c_transport }}<br>
             {% endif %}
             {% if item == "c_dest" %}
                 Remote/SIP Trunk IP:PORT for RTP : {{ connection.c_dest }}<br>
@@ -98,14 +112,14 @@
             {% endif %}
             {% if item == "c_client_public_ip" %}
                 Client public IP : 
-                <A HREF="http://www.geoiptool.com/en/?IP={{ connection.c_client_public_ip|slice:":-6"}}" target="_blank">{{ connection.c_client_public_ip }}</a>
-                <A HREF="http://api.hostip.info/get_html.php?ip={{ connection.get_first }}" target="_blank"> Lookup IP origin</a><br>
+                <A HREF="http://www.geoiptool.com/en/?IP={{ connection.c_client_public_ip|slice:":-6"}}" target="_blank" title="Click link to lookup geo location of caller IP">{{ connection.c_client_public_ip }}</a><br>
             {% endif %}
             {% if item == "c_tx_packets" %}
                 Packets sent : {{ connection.c_tx_packets }}<br>
             {% endif %}
             {% if item == "c_tx_rtcp_packets" %}
-                RTCP reports sent : {{ connection.c_tx_rtcp_packets }}<br>
+                <text title="The RTCP reports are usually sent every 5th second to the end-point and the reports contains the statics from the call">
+                RTCP reports sent :</text> {{ connection.c_tx_rtcp_packets }}<br>
             {% endif %}
             {% if item == "c_tx_lost_packets" %}
                 Lost packets : {{ connection.c_tx_lost_packets }}<br>
@@ -114,7 +128,8 @@
                 Packet loss : {{ connection.c_tx_loss }} %<br>
             {% endif %}
             {% if item == "c_tx_ordered_packets" %}
-                Out-of-sequence packets : {{ connection.c_tx_ordered_packets }}<br>
+                <text title="States if packets are received in a different order than they were sent (based on packet sequence number)">
+                Out-of-sequence packets :</text> {{ connection.c_tx_ordered_packets }}<br>
             {% endif %}
             {% if item == "c_tx_expected_packets" %}
                 Expected packets : {{ connection.c_tx_expected_packets }}<br>

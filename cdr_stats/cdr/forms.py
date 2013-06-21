@@ -107,7 +107,7 @@ class SearchForm(forms.Form):
     country_id = forms.MultipleChoiceField(label=_('Country'), required=False,
                                            choices=country_list_with_all())
 
-    q_client_rtt = forms.CharField(label=_('Client max RTT'),
+    q_client_rtt = forms.CharField(label=_('End-to-end max roundtrip time'),
                                required=False)
 
     q_client_rtt_type = forms.ChoiceField(label='',
@@ -116,7 +116,7 @@ class SearchForm(forms.Form):
     q_client_rtt_type.widget.attrs['class'] = 'input-small'
 
 
-    q_client_tx_packet_loss = forms.CharField(label=_('Remote end peak packet loss (%)'),
+    q_client_tx_packet_loss = forms.CharField(label=_('End-to-end percent of packet loss'),
                                required=False)
 
     q_client_tx_packet_loss_type = forms.ChoiceField(label='',
@@ -125,7 +125,7 @@ class SearchForm(forms.Form):
     q_client_tx_packet_loss_type.widget.attrs['class'] = 'input-small'
 
 
-    q_c_tx_loss = forms.CharField(label=_('Packet loss (%)'),
+    q_c_tx_loss = forms.CharField(label=_('Media Relay percent of packet loss'),
                                   required=False)
 
     q_c_tx_loss_type = forms.ChoiceField(label='',
@@ -133,7 +133,7 @@ class SearchForm(forms.Form):
                                          choices=COMPARE_LIST)
     q_c_tx_loss_type.widget.attrs['class'] = 'input-small'
 
-    kiss_customer_id = forms.CharField(label=_('Kiss Customer ID'),
+    kiss_customer_id = forms.CharField(label=_('KissMetrics Customer ID'),
                                   required=False)
 
     kiss_customer_id_type = forms.ChoiceField(label='',
