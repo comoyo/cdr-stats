@@ -324,7 +324,7 @@
                                 <img src="{{STATIC_URL}}cdr-stats/icons/door.png" title="{{ row.direction|capfirst }}  {% trans "call" %}" class="elemtooltip"/>
                             {% endifequal %}
                         {% endifequal %}
-                        {% ifequal row.client_hangup '200' %}
+                        {% ifequal row.client_hangup 200 %}
                             <img src="{{STATIC_URL}}cdr-stats/icons/flag_green.png" class="elemtooltip" title="Normal hangup">
                         {% else %}
                             <img src="{{STATIC_URL}}cdr-stats/icons/flag_red.png" class="elemtooltip" title="Call disconnect caused by bad voice quality on client side">
