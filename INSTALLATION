@@ -52,9 +52,9 @@ MONGO_CDRSTATS = {
     'MONTHLY_ANALYTIC': 'monthly_analytic',
     'CONC_CALL': 'concurrent_call',
     'CONC_CALL_AGG': 'concurrent_call_aggregate',
-    'URI': 'mongodb://aewa-staging-mongodb:29017,aewb-staging-mongodb:29017,aewc-staging-mongodb:29017',
-    'USER': 'genieCdrUser',
-    'PASSWORD': 'access2Stats123'
+    'URI': 'mongodb://url:29017,url:url:29017',
+    'USER': 'XXXX',
+    'PASSWORD': 'XXXX'
 }
 
 For production, the port numbers of the mongodb servers should be 27017, not
