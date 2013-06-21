@@ -327,7 +327,9 @@
                         {% ifequal row.client_hangup 200 %}
                             <img src="{{STATIC_URL}}cdr-stats/icons/flag_green.png" class="elemtooltip" title="Normal hangup">
                         {% else %}
-                            <img src="{{STATIC_URL}}cdr-stats/icons/flag_red.png" class="elemtooltip" title="Call disconnect caused by bad voice quality on client side">
+                            {% ifequal row.client_hangup 503 %}
+                                <img src="{{STATIC_URL}}cdr-stats/icons/flag_red.png" class="elemtooltip" title="Call disconnect caused by bad voice quality on client side">
+                            {% endifequal %}
                         {% endifequal %}
 
                         {% if "cdr_object_id" in row %}
