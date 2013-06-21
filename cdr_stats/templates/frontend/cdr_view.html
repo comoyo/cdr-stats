@@ -254,7 +254,7 @@
                         {% sort_link CDR_COLUMN_NAME.bill "-billsec"  %}
                     {% endifequal %}
                 </th>
-                <th title="The Q value is a combined value that represents the perceived quality to the end user. The value is defined based on the up- and downlink packet loss, round-trip latency (delay) and jitter (defined as a variation in the delay of received packets). This is the agerage vaule of Q for the call.">
+                <th title="The Q value is a combined value that represents the perceived quality to the end user. The value is defined based on the up- and downlink packet loss, round-trip latency (delay) and jitter (defined as a variation in the delay of received packets). This is the average value of Q for the call.">
                     {% ifequal col_name_with_order.sort_field 'client_call_quality.q_avg' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "client_call_quality.q_avg"  %}
                         {{ CDR_COLUMN_NAME.q_avg }}
