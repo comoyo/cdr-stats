@@ -32,3 +32,4 @@ class CDR_COLUMN_NAME(Choice):
     hangup_cause = _('Hangup cause')
     account = _('Account')
     bill_amount = _('Bill amount')
+    q_avg = _('Average Q')
