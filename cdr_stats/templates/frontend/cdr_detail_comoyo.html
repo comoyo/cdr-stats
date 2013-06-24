@@ -72,16 +72,16 @@
         <div id="q_value_graph" style="width:500px;height:150px;"></div><br>
 
         &nbsp&nbsp&nbsp
-        10: {{ element.client_call_quality.q_10 }} &nbsp&nbsp&nbsp
-        20: {{ element.client_call_quality.q_20 }} &nbsp&nbsp&nbsp
-        30: {{ element.client_call_quality.q_30 }} &nbsp&nbsp&nbsp
-        40: {{ element.client_call_quality.q_40 }} &nbsp&nbsp&nbsp
-        50: {{ element.client_call_quality.q_50 }} &nbsp&nbsp&nbsp
-        60: {{ element.client_call_quality.q_60 }} &nbsp&nbsp&nbsp
-        70: {{ element.client_call_quality.q_70 }} &nbsp&nbsp&nbsp
-        80: {{ element.client_call_quality.q_80 }} &nbsp&nbsp&nbsp
-        90: {{ element.client_call_quality.q_90 }} &nbsp&nbsp&nbsp
-        100: {{ element.client_call_quality.q_100 }} &nbsp<br>
+        <text title="Number of Q reports in the range : 0-10"> 10: </text>{{ element.client_call_quality.q_10 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 10-20">20: </text>{{ element.client_call_quality.q_20 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 20-30">30: </text>{{ element.client_call_quality.q_30 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 30-40">40: </text>{{ element.client_call_quality.q_40 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 40-50">50: </text>{{ element.client_call_quality.q_50 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 50-60">60: </text>{{ element.client_call_quality.q_60 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 60-70">70: </text>{{ element.client_call_quality.q_70 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 70-80">80: </text>{{ element.client_call_quality.q_80 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 80-90">90: </text>{{ element.client_call_quality.q_90 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 90-100">100: </text>{{ element.client_call_quality.q_100 }} &nbsp<br>
         <p/>
     {% endif %}
 
