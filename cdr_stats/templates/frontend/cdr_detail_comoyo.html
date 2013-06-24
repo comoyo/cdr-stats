@@ -1,4 +1,3 @@
-{% extends "frontend/master.html" %}
 {% load i18n cdr_extras common_tags %}
 
 {% block content %}
@@ -94,10 +93,16 @@
         {% for item in connection %}
             {% if item == "c_type" %}
                 {% if connection.c_type == "internal" %}
-                    <b>Direction : Far End to Media Relay</b><br>
+                    <b title= "Stats from the link  between the far-end (such as the SIP gateway) and the  Media Relay Server">
+                    Direction : Far End to Media Relay</b><br>
                 {% endif %}
                 {% if connection.c_type == "external" %}
-                    <b>Direction : Client to Media Relay</b><br>
+                    {% if connection.c_remote_ip|last|divisibleby:2 %}
+                        <b title="Stats from the link between the client and Media Relay Server">
+                        Direction : Client to Media Relay</b><br>
+                    {% else %}
+                        <b>Direction : RTCP reports from Media Relay to Far End</b><br>
+                    {% endif %}
                 {% endif %}
             {% endif %}
             {% if item == "c_transport" %}
