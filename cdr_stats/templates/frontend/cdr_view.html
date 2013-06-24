@@ -47,6 +47,12 @@
                         <span class="help-block">{{ form.to_date.help_text|safe }} </span>
                     </div>
                 </div>
+                <div class="span4">
+                    <label class="control-label" for="id_{{ form.kiss_customer_id.name }}" title="Internal use. Search for users ids with the same formas as used in KissMetrics">{{ form.kiss_customer_id.label }}</label>
+                    <div class="input">
+                        {{ form.kiss_customer_id }}&nbsp;&nbsp;
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -126,10 +132,13 @@
                  </div>
              </div>
              <div class="span4">
-                 <label class="control-label" for="id_{{ form.kiss_customer_id.name }}" title="Search for users ids with the same formas as used in KissMetrics">{{ form.kiss_customer_id.label }}</label>
+                 <label class="control-label" for="id_{{ form.q_c_q_avg.name }}" title="Average Q value">{{ form.q_c_q_avg.label }}</label>
                  <div class="input">
-                     {{ form.kiss_customer_id }}&nbsp;&nbsp;
+                     {{ form.q_c_q_avg }}&nbsp;&nbsp;{{ form.q_c_q_avg_type }}
                  </div>
+                 {% if form.q_c_q_avg.errors %}
+                     <span class="help-inline">{{ form.q_c_q_avg.errors }}</span>
+                 {% endif %}
              </div>
          </div>
      </div>
@@ -236,15 +245,6 @@
                       {% sort_link CDR_COLUMN_NAME.destination "-destination_number"  %}
                     {% endifequal %}
                 </th>
-                <th title="Total duration of the call, including setup time">
-                    {% ifequal col_name_with_order.sort_field 'duration' %}
-                      {% sort_link "<i class='icon-chevron-up'></i>" "duration"  %}
-                        {{ CDR_COLUMN_NAME.duration }}
-                      {% sort_link "<i class='icon-chevron-down'></i>" "-duration"  %}
-                    {% else %}
-                      {% sort_link CDR_COLUMN_NAME.duration "-duration"  %}
-                    {% endifequal %}
-                </th>
                 <th title="Total duration of the connected call">
                     {% ifequal col_name_with_order.sort_field 'billsec' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "billsec"  %}
@@ -288,13 +288,7 @@
                     {{ row.caller_id_name }}
                 </td>
                 <td>{{ row.destination_number }}</td>
-                <td>{% if result == 1 %}
-                        {{ row.duration|conv_min }}
-                    {% else %}
-                        {{ row.duration }}
-                    {% endif %}
-                </td>
-                <td>{% if result == 1 %}
+                 <td>{% if result == 1 %}
                         {{ row.billsec|conv_min }}
                     {% else %}
                         {{ row.billsec }}

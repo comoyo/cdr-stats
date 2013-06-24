@@ -230,6 +230,8 @@ def cdr_view(request):
     q_client_tx_packet_loss_type = ''
     q_c_tx_loss = ''
     q_c_tx_loss_type = ''
+    q_c_q_avg = ''
+    q_c_q_avg_type = ''
     kiss_customer_id = ''
     due = ''
     caller = ''
@@ -264,6 +266,8 @@ def cdr_view(request):
             request.session['session_q_client_tx_packet_loss_type'] = ''
             request.session['session_q_c_tx_loss'] = ''
             request.session['session_q_c_tx_loss_type'] = ''
+            request.session['session_q_c_q_avg'] = ''
+            request.session['session_q_c_q_avg_type'] = ''
             request.session['session_kiss_customer_id'] = ''
             request.session['session_hangup_cause_id'] = ''
             request.session['session_switch_id'] = ''
@@ -333,6 +337,12 @@ def cdr_view(request):
             if q_c_tx_loss:
                 request.session['session_q_c_tx_loss'] = q_c_tx_loss
                 request.session['session_q_c_tx_loss_type'] = q_c_tx_loss_type
+
+            q_c_q_avg = variable_value(request, 'q_c_q_avg')
+            q_c_q_avg_type = variable_value(request, 'q_c_q_avg_type')
+            if q_c_q_avg:
+                request.session['session_q_c_q_avg'] = q_c_q_avg
+                request.session['session_q_c_q_avg_type'] = q_c_q_avg_type
 
             kiss_customer_id = variable_value(request, 'kiss_customer_id')
             if kiss_customer_id:
@@ -414,6 +424,8 @@ def cdr_view(request):
             q_client_tx_packet_loss_type = request.session.get('session_q_client_tx_packet_loss_type')
             q_c_tx_loss = request.session.get('session_q_c_tx_loss')
             q_c_tx_loss_type = request.session.get('session_q_c_tx_loss_type')
+            q_c_q_avg = request.session.get('session_q_c_q_avg')
+            q_c_q_avg_type = request.session.get('session_q_c_q_avg_type')
             kiss_customer_id = request.session.get('session_kiss_customer_id')
 
             direction = request.session.get('session_direction')
@@ -455,6 +467,8 @@ def cdr_view(request):
         request.session['session_q_client_tx_packet_loss_type'] = ''
         request.session['session_q_c_tx_loss'] = ''
         request.session['session_q_c_tx_loss_type'] = ''
+        request.session['session_q_c_q_avg'] = ''
+        request.session['session_q_c_q_avg_type'] = ''
         request.session['session_kiss_customer_id'] = ''
         request.session['session_hangup_cause_id'] = ''
         request.session['session_switch_id'] = ''
@@ -533,9 +547,11 @@ def cdr_view(request):
 
     qty_tx_l = mongodb_int_filter(q_c_tx_loss, q_c_tx_loss_type)
     if qty_tx_l:
-        # query_var['client_rx_fraction_loss'] = daily_report_query_var['client_rx_fraction_loss'] = qty_tx_l
         query_var['midee_statistics.connections.c_tx_loss'] = daily_report_query_var['midee_statistics.connections.c_tx_loss'] = qty_tx_l
 
+    qty_q_avg = mongodb_int_filter(q_c_q_avg, q_c_q_avg_type)
+    if qty_q_avg:
+        query_var['client_call_quality.q_avg'] = daily_report_query_var['client_call_quality.q_avg'] = qty_q_avg
 
     if switch_id and int(switch_id) != 0:
         daily_report_query_var['metadata.switch_id'] = int(switch_id)
@@ -584,6 +600,8 @@ def cdr_view(request):
             'q_client_tx_packet_loss_type': q_client_tx_packet_loss_type,
             'q_c_tx_loss': q_c_tx_loss,
             'q_c_tx_loss_type': q_c_tx_loss_type,
+            'q_c_q_avg': q_c_q_avg,
+            'q_c_q_avg_type': q_c_q_avg_type,
             'kiss_customer_id': kiss_customer_id,
             'result': result,
             'direction': direction,
@@ -676,8 +694,8 @@ def cdr_export_to_csv(request):
     )
 
     writer = csv.writer(response, dialect=csv.excel_tab)
-    writer.writerow(['Call-date', 'CLID', 'Destination', 'Duration',
-                     'Bill sec', 'Hangup cause', 'AccountCode', 'Direction'])
+    writer.writerow(['Call-date', 'Caller ID', 'Destination', 'Duration',
+                     'Talk time', 'Hangup cause', 'Country'])
 
     for cdr in final_result:
         writer.writerow([
@@ -687,8 +705,7 @@ def cdr_export_to_csv(request):
             cdr['duration'],
             cdr['billsec'],
             get_hangupcause_name(cdr['hangup_cause_id']),
-            cdr['accountcode'],
-            cdr['direction']
+            get_country_name(cdr['country_id'])
         ])
     return response
 

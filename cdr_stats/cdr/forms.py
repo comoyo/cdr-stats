@@ -133,6 +133,16 @@ class SearchForm(forms.Form):
                                          choices=COMPARE_LIST)
     q_c_tx_loss_type.widget.attrs['class'] = 'input-small'
 
+
+    q_c_q_avg = forms.CharField(label=_('Average Q'),
+                                  required=False)
+
+    q_c_q_avg_type = forms.ChoiceField(label='',
+                                       required=False,
+                                       choices=COMPARE_LIST)
+    q_c_q_avg_type.widget.attrs['class'] = 'input-small'
+
+
     kiss_customer_id = forms.CharField(label=_('KissMetrics Customer ID'),
                                   required=False)
 
