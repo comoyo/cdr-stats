@@ -63,18 +63,25 @@
         <b title="The Q value is a combined value that represents the perceived quality to the end user. The value is defined based on the up- and downlink packet loss, round-trip latency (delay) and jitter (defined as a variation in the delay of received packets)">
         Q Values (end user perceived quality)</b><br>
 
+        <text title="Q value above 60 is considered as good/fair and values below 30 is considered as poor">Average Q value:</text>
+        {{ element.client_call_quality.q_avg }}<br>
+        
+        </p>
         Q Distribution:</b><br>
-        100: {{ element.client_call_quality.q_100 }} &nbsp
-        90: {{ element.client_call_quality.q_90 }} &nbsp
-        80: {{ element.client_call_quality.q_80 }} &nbsp
-        70: {{ element.client_call_quality.q_70 }} &nbsp
-        60: {{ element.client_call_quality.q_60 }} &nbsp
-        50: {{ element.client_call_quality.q_50 }} &nbsp
-        40: {{ element.client_call_quality.q_40 }} &nbsp
-        30: {{ element.client_call_quality.q_30 }} &nbsp
-        20: {{ element.client_call_quality.q_20 }} &nbsp
-        10: {{ element.client_call_quality.q_10 }} &nbsp<br>
-        <text title="Q value above 60 is considered as good/fair and values below 30 is considered as poor">Average Q value:</text> {{ element.client_call_quality.q_avg }}<br>
+
+        <div id="q_value_graph" style="width:500px;height:150px;"></div><br>
+
+        &nbsp&nbsp&nbsp
+        10: {{ element.client_call_quality.q_10 }} &nbsp&nbsp&nbsp
+        20: {{ element.client_call_quality.q_20 }} &nbsp&nbsp&nbsp
+        30: {{ element.client_call_quality.q_30 }} &nbsp&nbsp&nbsp
+        40: {{ element.client_call_quality.q_40 }} &nbsp&nbsp&nbsp
+        50: {{ element.client_call_quality.q_50 }} &nbsp&nbsp&nbsp
+        60: {{ element.client_call_quality.q_60 }} &nbsp&nbsp&nbsp
+        70: {{ element.client_call_quality.q_70 }} &nbsp&nbsp&nbsp
+        80: {{ element.client_call_quality.q_80 }} &nbsp&nbsp&nbsp
+        90: {{ element.client_call_quality.q_90 }} &nbsp&nbsp&nbsp
+        100: {{ element.client_call_quality.q_100 }} &nbsp<br>
         <p/>
     {% endif %}
 
@@ -156,5 +163,41 @@
     {% endfor %}
 
 {% endfor %}
+
+<script type="text/javascript">
+$(function () {
+
+    var data = [
+        {% for element in row %}
+            {% if element.client_call_quality.q_100 %}
+                {
+                    data: [               
+                        [100, {{element.client_call_quality.q_100}}],
+                        [90, {{element.client_call_quality.q_90}}],
+                        [80, {{element.client_call_quality.q_80}}],
+                        [70, {{element.client_call_quality.q_70}}],
+                        [60, {{element.client_call_quality.q_60}}],
+                        [50, {{element.client_call_quality.q_50}}],
+                        [40, {{element.client_call_quality.q_40}}],
+                        [30, {{element.client_call_quality.q_30}}],
+                        [20, {{element.client_call_quality.q_20}}],
+                        [10, {{element.client_call_quality.q_10}}],
+                        [0, 0]
+                    ]
+                },
+            {% endif %}
+        {% endfor %}
+    ];
+
+    var options = {
+        series: {
+                lines: { show: true, steps: true, fill: true }
+        }
+    };
+    
+    $.plot($("#q_value_graph"), data, options);
+});
+
+</script>
 
 {% endblock %}
