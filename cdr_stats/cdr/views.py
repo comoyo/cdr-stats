@@ -662,8 +662,6 @@ def cdr_view(request):
     logging.debug('CDR View End')
     return render_to_response(template_name, template_data,
                               context_instance=RequestContext(request))
-
-
 @login_required
 def cdr_export_to_csv(request):
     """
@@ -695,17 +693,50 @@ def cdr_export_to_csv(request):
 
     writer = csv.writer(response, dialect=csv.excel_tab)
     writer.writerow(['Call-date', 'Caller ID', 'Destination', 'Duration',
-                     'Talk time', 'Hangup cause', 'Country'])
+                     'Talk time', 'Hangup cause', 'Country', 'Average Q',
+                     'Q 0-10', 'Q 10-20', 'Q 20-30', 'Q 30-40', 'Q 50-60',
+                     'Q 60-70', 'Q 70-80', 'Q 80-90', 'Q 90-100'])
 
     for cdr in final_result:
+        avg_q = ''
+        q_10 = ''
+        q_20 = ''
+        q_30 = ''
+        q_40 = ''
+        q_50 = ''
+        q_60 = ''
+        q_70 = ''
+        q_80 = ''
+        q_90 = ''
+        q_100 = ''
+           
+        if ('client_call_quality' in cdr):
+            client_call_quality = cdr['client_call_quality']
+            if ('q_avg' in client_call_quality) :
+                avg_q = client_call_quality['q_avg']
+
+            q_10 = client_call_quality['q_10']
+            q_20 = client_call_quality['q_20']
+
         writer.writerow([
             cdr['start_uepoch'],
-            cdr['caller_id_number'] + '-' + cdr['caller_id_name'],
+            cdr['caller_id_number'],
             cdr['destination_number'],
             cdr['duration'],
             cdr['billsec'],
             get_hangupcause_name(cdr['hangup_cause_id']),
-            get_country_name(cdr['country_id'])
+            get_country_name(cdr['country_id']),
+            avg_q,
+            q_10,
+            q_20,
+            q_30,
+            q_40,
+            q_50,
+            q_60,
+            q_70,
+            q_80,
+            q_90,
+            q_100
         ])
     return response
 
