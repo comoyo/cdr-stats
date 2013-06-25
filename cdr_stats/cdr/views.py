@@ -717,6 +717,14 @@ def cdr_export_to_csv(request):
 
             q_10 = client_call_quality['q_10']
             q_20 = client_call_quality['q_20']
+            q_30 = client_call_quality['q_30']
+            q_40 = client_call_quality['q_40']
+            q_50 = client_call_quality['q_50']
+            q_60 = client_call_quality['q_60']
+            q_70 = client_call_quality['q_70']
+            q_80 = client_call_quality['q_80']
+            q_90 = client_call_quality['q_90']
+            q_100 = client_call_quality['q_100']
 
         writer.writerow([
             cdr['start_uepoch'],
