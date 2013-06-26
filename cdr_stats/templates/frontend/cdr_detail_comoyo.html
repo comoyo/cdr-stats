@@ -48,7 +48,7 @@
 
     <p/>
     <b title="Measured the quality at the client (near-end) IP side Measured quality of sent packets to the client (near-end) IP side">Far End to Client stats</b><br>
-    Client average of packet loss : {{ element.client_rx_fraction_loss }} %<br>
+    Client average of packet loss : {{ element.client_rx_fraction_loss|floatformat:3 }} %<br>
     Client packets recieved : {{ element.client_rx_packets }}<br>
     Client packets lost : {{ element.client_rx_packets_lost }}<br>
     Client packets sent : {{ element.client_tx_packets }}<br>
@@ -68,20 +68,19 @@
         
         </p>
         Q Distribution:</b><br>
-
         <div id="q_value_graph" style="width:500px;height:150px;"></div><br>
 
         &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 0-10"> 10: </text>{{ element.client_call_quality.q_10 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 10-20">20: </text>{{ element.client_call_quality.q_20 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 20-30">30: </text>{{ element.client_call_quality.q_30 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 30-40">40: </text>{{ element.client_call_quality.q_40 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 40-50">50: </text>{{ element.client_call_quality.q_50 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 50-60">60: </text>{{ element.client_call_quality.q_60 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 60-70">70: </text>{{ element.client_call_quality.q_70 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 70-80">80: </text>{{ element.client_call_quality.q_80 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 80-90">90: </text>{{ element.client_call_quality.q_90 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 90-100">100: </text>{{ element.client_call_quality.q_100 }} &nbsp<br>
+        <text title="Number of Q reports in the range : 0-10">0-10: </text>{{ element.client_call_quality.q_10 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 10-20">10-20: </text>{{ element.client_call_quality.q_20 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 20-30">20-30: </text>{{ element.client_call_quality.q_30 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 30-40">30-40: </text>{{ element.client_call_quality.q_40 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 40-50">40-50: </text>{{ element.client_call_quality.q_50 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 50-60">50-60: </text>{{ element.client_call_quality.q_60 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 60-70">60-70: </text>{{ element.client_call_quality.q_70 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 70-80">70-80: </text>{{ element.client_call_quality.q_80 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 80-90">80-90: </text>{{ element.client_call_quality.q_90 }} &nbsp&nbsp&nbsp
+        <text title="Number of Q reports in the range : 90-100">90-100: </text>{{ element.client_call_quality.q_100 }} &nbsp<br>
         <p/>
     {% endif %}
 
@@ -141,7 +140,7 @@
             {% endif %}
             {% if item == "c_tx_ordered_packets" %}
                 <text title="States if packets are received in a different order than they were sent (based on packet sequence number)">
-                Out-of-sequence packets :</text> {{ connection.c_tx_ordered_packets }}<br>
+                Out-of-sequence packets :</text> {{ connection.c_tx_packets|subtract:connection.c_tx_ordered_packets }}<br>
             {% endif %}
             {% if item == "c_tx_expected_packets" %}
                 Expected packets : {{ connection.c_tx_expected_packets }}<br>
