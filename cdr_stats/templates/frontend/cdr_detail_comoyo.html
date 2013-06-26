@@ -30,7 +30,7 @@
         <text title="Internal ID for KissMetric data">Kiss's Customer ID :</text> {{ element.caller_id_number_hash }}<br>
     {% endif %}
 
-    {% if element.client_max_rtt %}
+    {% if element.client_max_rtt > -1 %}
         <p><br></p>
         <font size="4"><b>IP End-to-end Statistics</b><br></font>
         <text title="Maximum roundtrip delay, measured from the Client to the IP end-point that usually is a SIP gateway or another IP client. The delay from the gateway to the GSM mobile is not considered">
