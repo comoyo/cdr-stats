@@ -48,15 +48,15 @@
     {% if element.client_max_tx_packet_loss > -1 %}
         <p/>
         <b title="Measured quality of sent packets to the far-end. The far-end can be SIP gateway or an IP client.">Client to Far End stats</b><br>
-        Far End max packet loss : {{ element.client_max_tx_packet_loss }}<br>
-        Far End average packet loss : {{ element.client_avg_tx_packet_loss }}<br>
-        Far End min packet loss : {{ element.client_min_tx_packet_loss }}<br>
+        Far End max packet loss : {{ element.client_max_tx_packet_loss }} %<br>
+        Far End average packet loss : {{ element.client_avg_tx_packet_loss }} %<br>
+        Far End min packet loss : {{ element.client_min_tx_packet_loss }} %<br>
     {% endif %}
 
     {% if element.client_rx_packets  > -1 %}
         <p/>
         <b title="Measured the quality at the client (near-end) IP side Measured quality of sent packets to the client (near-end) IP side">Far End to Client stats</b><br>
-        Client average of packet loss : {{ element.client_rx_fraction_loss|floatformat:3 }} %<br>
+        Client average of packet loss : {{ element.client_rx_fraction_loss|floatformat:"0" }} %<br>
         Client packets recieved : {{ element.client_rx_packets }}<br>
         Client packets lost : {{ element.client_rx_packets_lost }}<br>
         Client packets sent : {{ element.client_tx_packets }}<br>
@@ -160,7 +160,7 @@
                 Lost packets : {{ connection.c_tx_lost_packets }}<br>
             {% endif %}
             {% if item == "c_tx_loss" %}
-                Packet loss : {{ connection.c_tx_loss }} %<br>
+                Packet loss : {{ connection.c_tx_loss|floatformat:"0" }} %<br>
             {% endif %}
             {% if item == "c_tx_ordered_packets" %}
                 <text title="States if packets are received in a different order than they were sent (based on packet sequence number)">
