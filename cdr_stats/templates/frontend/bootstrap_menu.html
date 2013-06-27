@@ -42,9 +42,6 @@
               <li id="fat-menu-I" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Real-Time" %}<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  {% if perms.user_profile.allow_cdr_realtime %}
-                    <li {% ifequal module 'cdr_realtime' %}class="active"{% endifequal %}><a href="/cdr_realtime/">{% trans "real-time calls"|title %}</a></li>
-                  {% endif %}
                   {% if perms.user_profile.allow_cdr_concurrent_calls %}
                     <li {% ifequal module 'cdr_concurrent_calls' %}class="active"{% endifequal %}><a href="/cdr_concurrent_calls/">{% trans "concurrent calls"|title %}</a></li>
                   {% endif %}
@@ -67,6 +64,7 @@
                 </ul>
               </li>
             </ul>
+            <!-- Enable if threat control is used
             <ul class="nav pull-left">
               <li id="fat-menu-III" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "threat control"|title %}<b class="caret"></b></a>
@@ -83,6 +81,7 @@
                 </ul>
               </li>
             </ul>
+          -->
           {% endif %}
 
           {% if user.is_authenticated %}

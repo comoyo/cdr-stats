@@ -1146,7 +1146,11 @@ def get_cdr_mail_report():
             else:
                 hangup_analytic[hangup_cause_id] = 1
 
-            country_id = int(doc['_id']['country_id'])
+            try:
+                country_id = int(doc['_id']['country_id'])
+            except ValueError:
+                country_id = 0
+
             if country_id in country_analytic:
                 country_analytic[country_id]['call_count'] +=\
                     int(doc['call_count'])
