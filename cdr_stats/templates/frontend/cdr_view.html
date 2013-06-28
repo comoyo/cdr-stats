@@ -320,9 +320,13 @@
                         {% endifequal %}
                         {% ifequal row.client_hangup 503 %}
                                 <img src="{{STATIC_URL}}cdr-stats/icons/flag_red.png" class="elemtooltip" title="Call disconnect caused by bad voice quality on client side">
+                        {% else %}{% ifequal row.client_hangup 432 %}
+                                <img src="{{STATIC_URL}}cdr-stats/icons/flag_orange.png" class="elemtooltip" title="Call disconnect caused by long call time">
+                        {% else %}{% ifequal row.client_hangup 402 %}
+                                <img src="{{STATIC_URL}}cdr-stats/icons/flag_blue.png" class="elemtooltip" title="Call disconnect caused by low cash">
                         {% else %}
                                 <img src="{{STATIC_URL}}cdr-stats/icons/flag_green.png" class="elemtooltip" title="Normal hangup">
-                        {% endifequal %}
+                        {% endifequal %}{% endifequal %}{% endifequal %}
 
                         {% if "cdr_object_id" in row %}
                             {% if perms.user_profile.allow_cdr_detail %}

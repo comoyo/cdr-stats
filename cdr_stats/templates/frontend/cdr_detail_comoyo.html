@@ -77,20 +77,37 @@
         {{ element.client_call_quality.q_avg }}<br>
         
         </p>
-        Q Distribution:</b><br>
+        <b>Q Distribution:</b><br>
         <div id="q_value_graph" style="width:500px;height:150px;"></div><br>
 
-        &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 0-10">0-10: </text>{{ element.client_call_quality.q_10 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 10-20">10-20: </text>{{ element.client_call_quality.q_20 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 20-30">20-30: </text>{{ element.client_call_quality.q_30 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 30-40">30-40: </text>{{ element.client_call_quality.q_40 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 40-50">40-50: </text>{{ element.client_call_quality.q_50 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 50-60">50-60: </text>{{ element.client_call_quality.q_60 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 60-70">60-70: </text>{{ element.client_call_quality.q_70 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 70-80">70-80: </text>{{ element.client_call_quality.q_80 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 80-90">80-90: </text>{{ element.client_call_quality.q_90 }} &nbsp&nbsp&nbsp
-        <text title="Number of Q reports in the range : 90-100">90-100: </text>{{ element.client_call_quality.q_100 }} &nbsp<br>
+        <a onclick ="javascript:ShowHide('hidden_q')" href="javascript:;" >Show/Hide data</a>
+        <div id=hidden_q style="DISPLAY: none">
+            <br><table border="2">
+            <tr>
+                <th><text title="Number of Q reports in the range : 0-10">0-10</text></th>
+                <th><text title="Number of Q reports in the range : 10-20">10-20</text></th>
+                <th><text title="Number of Q reports in the range : 20-30">20-30</text></th>
+                <th><text title="Number of Q reports in the range : 30-40">30-40</text></th>
+                <th><text title="Number of Q reports in the range : 40-50">40-50</text></th>
+                <th><text title="Number of Q reports in the range : 50-60">50-60</text></th>
+                <th><text title="Number of Q reports in the range : 60-70">60-70</text></th>
+                <th><text title="Number of Q reports in the range : 70-80">70-80</text></th>
+                <th><text title="Number of Q reports in the range : 80-90">80-90</text></th>
+                <th><text title="Number of Q reports in the range : 90-100">90-100</text></th>
+            </tr>
+            
+            <td>{{ element.client_call_quality.q_10 }}</td>
+            <td>{{ element.client_call_quality.q_20 }}</td>
+            <td>{{ element.client_call_quality.q_30 }}</td>
+            <td>{{ element.client_call_quality.q_40 }}</td>
+            <td>{{ element.client_call_quality.q_50 }}</td>
+            <td>{{ element.client_call_quality.q_60 }}</td>
+            <td>{{ element.client_call_quality.q_70 }}</td>
+            <td>{{ element.client_call_quality.q_80 }}</td>
+            <td>{{ element.client_call_quality.q_90 }}</td>
+            <td>{{ element.client_call_quality.q_100 }}</td>
+        </table>
+        </div>
         <p/>
     {% endif %}
 
@@ -211,6 +228,19 @@ $(function () {
     
     $.plot($("#q_value_graph"), data, options);
 });
+
+function ShowHide(divId)
+{
+    if(document.getElementById(divId).style.display == 'none')
+    {
+        document.getElementById(divId).style.display='block';
+    }
+    else
+    {
+        document.getElementById(divId).style.display = 'none';
+    }
+}
+
 
 </script>
 
