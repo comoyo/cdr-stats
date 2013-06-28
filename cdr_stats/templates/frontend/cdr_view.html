@@ -396,10 +396,10 @@
             <thead>
             <tr>
                 <th>{% trans "Date"  %}</th>
-                <th>{% trans "Duration"  %}</th>
+                <th><text title="Total duration of all calls made this date, including setup time">{% trans "Duration"  %}</th>
                 <th>{% trans "Graphic"  %}</th>
-                <th>{% trans "Calls"  %}</th>
-                <th><acronym title="{% trans "Average Connection Time"  %}">{% trans "ACT"  %}</acronym></th>
+                <th><text title="Total number of calls">{% trans "Calls"  %}</th>
+                <th><text title="Average time for a call, including setup time">{% trans "ACT"  %}</th>
             </tr>
             </thead>
             {% for td in total_data %}
