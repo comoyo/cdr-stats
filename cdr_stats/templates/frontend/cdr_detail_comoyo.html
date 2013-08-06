@@ -67,7 +67,7 @@
         Client hangup reason (SIP) :</text> {{ element.client_hangup }}<br>
     {% endif %}
 
-    {% if element.client_call_quality.q_avg %}
+    {% if element.client_call_quality.q_avg > -1 %}
         <p/>
         <p/>
         <b title="The Q value is a combined value that represents the perceived quality to the end user. The value is defined based on the up- and downlink packet loss, round-trip latency (delay) and jitter (defined as a variation in the delay of received packets)">
@@ -200,7 +200,7 @@ $(function () {
 
     var data = [
         {% for element in row %}
-            {% if element.client_call_quality.q_100 %}
+            {% if element.client_call_quality.q_100 > -1 %}
                 {
                     data: [               
                         [100, {{element.client_call_quality.q_100}}],
@@ -240,8 +240,6 @@ function ShowHide(divId)
         document.getElementById(divId).style.display = 'none';
     }
 }
-
-
 </script>
 
 {% endblock %}
