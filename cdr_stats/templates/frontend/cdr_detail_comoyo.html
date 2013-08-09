@@ -80,9 +80,8 @@
         <b>Q Distribution:</b><br>
         <div id="q_value_graph" style="width:500px;height:150px;"></div><br>
 
-        <a onclick ="javascript:ShowHide('hidden_q')" href="javascript:;" >Show/Hide data</a>
-        <div id=hidden_q style="DISPLAY: none">
-            <br><table border="2">
+        <br>
+        <table border="2">
             <tr>
                 <th><text title="Number of Q reports in the range : 0-10">0-10</text></th>
                 <th><text title="Number of Q reports in the range : 10-20">10-20</text></th>
@@ -106,9 +105,8 @@
             <td>{{ element.client_call_quality.q_80 }}</td>
             <td>{{ element.client_call_quality.q_90 }}</td>
             <td>{{ element.client_call_quality.q_100 }}</td>
-        </table>
-        </div>
-        <p/>
+    </table>
+    <p/>
     {% endif %}
 
     <p><br></p>
@@ -228,18 +226,6 @@ $(function () {
     
     $.plot($("#q_value_graph"), data, options);
 });
-
-function ShowHide(divId)
-{
-    if(document.getElementById(divId).style.display == 'none')
-    {
-        document.getElementById(divId).style.display='block';
-    }
-    else
-    {
-        document.getElementById(divId).style.display = 'none';
-    }
-}
 </script>
 
 {% endblock %}
