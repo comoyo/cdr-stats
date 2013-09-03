@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <label class="control-label" for="id_{{ form.kiss_customer_id.name }}" title="Internal use. Search for users ids with the same formas as used in KissMetrics">{{ form.kiss_customer_id.label }}</label>
+                    <label class="control-label" for="id_{{ form.kiss_customer_id.name }}" title="Internal use. Search for users ids with the same format as used in KissMetrics">{{ form.kiss_customer_id.label }}</label>
                     <div class="input">
                         {{ form.kiss_customer_id }}&nbsp;&nbsp;
                     </div>
@@ -79,7 +79,7 @@
             {% endif %}
           </div>
           <div class="span4">
-            <label class="control-label" for="id_{{ form.caller_filter.name }}"  title="Filter out Caller IDs from the search, comma separeted list of phone numbers">{{ form.caller_filter.label }}</label>
+            <label class="control-label" for="id_{{ form.caller_filter.name }}"  title="Filter out Caller IDs from the search, comma separated list of phone numbers">{{ form.caller_filter.label }}</label>
             <div class="input">
               {{ form.caller_filter }}
             </div>
@@ -321,9 +321,11 @@
                         {% ifequal row.client_hangup 503 %}
                                 <img src="{{STATIC_URL}}cdr-stats/icons/flag_red.png" class="elemtooltip" title="Call disconnect caused by bad voice quality on client side">
                         {% else %}{% ifequal row.client_hangup 432 %}
-                                <img src="{{STATIC_URL}}cdr-stats/icons/flag_orange.png" class="elemtooltip" title="Call disconnect caused by long call time">
+                                <img src="{{STATIC_URL}}cdr-stats/icons/flag_orange.png" class="elemtooltip" title="Call disconnect caused by client exceeded call time limit">
                         {% else %}{% ifequal row.client_hangup 402 %}
-                                <img src="{{STATIC_URL}}cdr-stats/icons/flag_blue.png" class="elemtooltip" title="Call disconnect caused by low cash">
+                                <img src="{{STATIC_URL}}cdr-stats/icons/flag_blue.png" class="elemtooltip" title="Call disconnect caused by client no more prepaid call minutes left">
+                        {% else %}{% ifequal row.client_hangup 480 %}
+                                <img src="{{STATIC_URL}}cdr-stats/icons/flag_purple.png" class="elemtooltip" title="Call disconnect caused by client lost internet connection">
                         {% else %}
                                 <img src="{{STATIC_URL}}cdr-stats/icons/flag_green.png" class="elemtooltip" title="Normal hangup">
                         {% endifequal %}{% endifequal %}{% endifequal %}
