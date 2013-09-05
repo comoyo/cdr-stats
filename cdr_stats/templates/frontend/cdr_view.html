@@ -324,7 +324,7 @@
                                 <img src="{{STATIC_URL}}cdr-stats/icons/flag_orange.png" class="elemtooltip" title="Call disconnect caused by client exceeded call time limit">
                         {% else %}{% ifequal row.client_hangup 402 %}
                                 <img src="{{STATIC_URL}}cdr-stats/icons/flag_blue.png" class="elemtooltip" title="Call disconnect caused by client no more prepaid call minutes left">
-                        {% else %}{% ifequal row.client_hangup 480 %}
+                        {% else %}{% ifequal row.client_hangup 434 %}
                                 <img src="{{STATIC_URL}}cdr-stats/icons/flag_purple.png" class="elemtooltip" title="Call disconnect caused by client lost internet connection">
                         {% else %}
                                 <img src="{{STATIC_URL}}cdr-stats/icons/flag_green.png" class="elemtooltip" title="Normal hangup">
