@@ -67,6 +67,11 @@
         Client hangup reason (SIP) :</text> {{ element.client_hangup }}<br>
     {% endif %}
 
+    {% if element.client_network_type %}
+        <text title="Type of IP network, mobile, wireless or wired at end of call">
+        Client network type :</text> {{ element.client_network_type }}<br>
+    {% endif %}
+
     {% if element.client_call_quality.q_avg > -1 %}
         <p/>
         <p/>
