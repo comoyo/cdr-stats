@@ -23,8 +23,14 @@
     {% if element.bill_amount %}
         <text title="The billed amount for the call. Only applicable if we sell per minute, otherwise ignore">Billed Amount :</text> {{ element.bill_amount }}<br>
     {% endif %}
+    {% if element.bill_type %}
+        <text title="Type of subscription method used">Bill Method :</text> {{ element.bill_type }}<br>
+    {% endif %}
+    {% if element.bill_store_id %}
+        <text title="Store id for billed right. Only applicable for subscription service">Store id of billed right :</text> {{ element.bill_store_id }}<br>
+    {% endif %}
     {% if element.bill_sku %}
-        <text title="Type of subscription used">Bill Method :</text> {{ element.bill_sku }}<br>
+        <text title="Type of right used to bill">Billed Right :</text> {{ element.bill_sku }}<br>
     {% endif %}
     {% if element.caller_id_number_hash %}
         <text title="Internal ID for KissMetric data">Kiss's Customer ID :</text> {{ element.caller_id_number_hash }}<br>
@@ -63,7 +69,7 @@
     {% endif %}
 
     {% if element.client_hangup %}
-        <text title="Based on SIP reponse code (http://en.wikipedia.org/wiki/List_of_SIP_response_codes). 200 is a successful call hangup/completion">
+        <text title="Based on SIP response code (http://en.wikipedia.org/wiki/List_of_SIP_response_codes). 200 is a successful call hangup/completion">
         Client hangup reason (SIP) :</text> {{ element.client_hangup }}<br>
     {% endif %}
 
