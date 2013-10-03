@@ -236,7 +236,7 @@ def cdr_view(request):
     due = ''
     caller = ''
     caller_type = ''
-    caller_filter = ''
+    caller_filter = '+4746796655'
     cli = ''
     cli_filter = ''
     search_tag = 0
