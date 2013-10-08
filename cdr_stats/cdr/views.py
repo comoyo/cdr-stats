@@ -458,7 +458,7 @@ def cdr_view(request):
         request.session['session_accountcode_type'] = ''
         request.session['session_caller'] = ''
         request.session['session_caller_type'] = ''
-        request.session['session_caller_filter'] = ''
+        request.session['session_caller_filter'] = '+4746796655'
         request.session['session_duration'] = ''
         request.session['session_duration_type'] = ''
         request.session['session_q_client_rtt'] = ''
@@ -1140,11 +1140,15 @@ def get_cdr_mail_report():
             total_calls += int(doc['call_count'])
 
             # created cdr_hangup_analytic
-            hangup_cause_id = int(doc['_id']['hangup_cause_id'])
-            if hangup_cause_id in hangup_analytic:
-                hangup_analytic[hangup_cause_id] += 1
-            else:
-                hangup_analytic[hangup_cause_id] = 1
+            try:
+                hangup_cause_id = int(doc['_id']['hangup_cause_id'])
+            
+                if hangup_cause_id in hangup_analytic:
+                    hangup_analytic[hangup_cause_id] += 1
+                else:
+                    hangup_analytic[hangup_cause_id] = 1
+            except ValueError:
+                pass
 
             try:
                 country_id = int(doc['_id']['country_id'])
@@ -2017,3 +2021,4 @@ def world_map_view(request):
     }
     return render_to_response(template_name, variables,
         context_instance=RequestContext(request))
+
