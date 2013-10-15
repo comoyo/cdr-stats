@@ -151,6 +151,9 @@ class SearchForm(forms.Form):
                                          choices=COMPARE_LIST)
     kiss_customer_id_type.widget.attrs['class'] = 'input-small'
 
+    q_network_type = forms.CharField(label=_('Network Type'),
+                                  required=False)
+
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
         self.fields['switch'].choices = sw_list_with_all()
@@ -424,3 +427,4 @@ class CDR_FileImport(FileImport):
             raise forms.ValidationError(
                 'select accountcode column no else enter accountcode')
         return accountcode
+

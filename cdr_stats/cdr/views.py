@@ -233,6 +233,7 @@ def cdr_view(request):
     q_c_q_avg = ''
     q_c_q_avg_type = ''
     kiss_customer_id = ''
+    q_network_type = ''
     due = ''
     caller = ''
     caller_type = ''
@@ -270,6 +271,7 @@ def cdr_view(request):
             request.session['session_q_c_q_avg_type'] = ''
             request.session['session_kiss_customer_id'] = ''
             request.session['session_hangup_cause_id'] = ''
+            request.session['session_q_network_type'] = ''
             request.session['session_switch_id'] = ''
             request.session['session_direction'] = ''
             request.session['session_country_id'] = ''
@@ -347,6 +349,11 @@ def cdr_view(request):
             kiss_customer_id = variable_value(request, 'kiss_customer_id')
             if kiss_customer_id:
                 request.session['session_kiss_customer_id'] = kiss_customer_id
+
+
+            q_network_type = variable_value(request, 'q_network_type')
+            if q_network_type:
+                request.session['session_q_network_type'] = q_network_type
 
             direction = variable_value(request, 'direction')
             if direction and direction != 'all':
@@ -427,6 +434,7 @@ def cdr_view(request):
             q_c_q_avg = request.session.get('session_q_c_q_avg')
             q_c_q_avg_type = request.session.get('session_q_c_q_avg_type')
             kiss_customer_id = request.session.get('session_kiss_customer_id')
+            q_c_network_type = request.session.get('session_q_network_type')
 
             direction = request.session.get('session_direction')
             switch_id = request.session.get('session_switch_id')
@@ -470,6 +478,7 @@ def cdr_view(request):
         request.session['session_q_c_q_avg'] = ''
         request.session['session_q_c_q_avg_type'] = ''
         request.session['session_kiss_customer_id'] = ''
+        request.session['session_q_network_type'] = ''
         request.session['session_hangup_cause_id'] = ''
         request.session['session_switch_id'] = ''
         request.session['session_direction'] = ''
@@ -544,6 +553,9 @@ def cdr_view(request):
     if kiss_customer_id:
         query_var['caller_id_number_hash'] = daily_report_query_var['caller_id_number_hash'] = kiss_customer_id
 
+    if q_network_type:
+        query_var['client_network_type'] = daily_report_query_var['client_network_type'] = q_network_type
+
 
     qty_tx_l = mongodb_int_filter(q_c_tx_loss, q_c_tx_loss_type)
     if qty_tx_l:
@@ -603,6 +615,7 @@ def cdr_view(request):
             'q_c_q_avg': q_c_q_avg,
             'q_c_q_avg_type': q_c_q_avg_type,
             'kiss_customer_id': kiss_customer_id,
+            'q_network_type': q_network_type,
             'result': result,
             'direction': direction,
             'hangup_cause': hangup_cause_id,
