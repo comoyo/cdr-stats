@@ -263,6 +263,15 @@
                         {% sort_link CDR_COLUMN_NAME.q_avg "-client_call_quality.q_avg"  %}
                     {% endifequal %}
                 </th>
+                <th title="The type of network that the caller used during the call.">
+                    {% ifequal col_name_with_order.sort_field 'client_network_type' %}
+                      {% sort_link "<i class='icon-chevron-up'></i>" "client_network_type"  %}
+                        {{ CDR_COLUMN_NAME.client_network_type }}
+                      {% sort_link "<i class='icon-chevron-down'></i>" "-client_network_type"  %}
+                    {% else %}
+                        {% sort_link CDR_COLUMN_NAME.client_network_type "-client_network_type"  %}
+                    {% endifequal %}
+                </th>
                 <th title="Hangup reason">
                     {% ifequal col_name_with_order.sort_field 'hangup_cause_id' %}
                       {% sort_link "<i class='icon-chevron-up'></i>" "hangup_cause_id"  %}
@@ -295,6 +304,7 @@
                     {% endif %}
                 </td>
                 <td>{{ row.client_call_quality.q_avg }}</td>
+                <td>{{ row.client_network_type }}</td>
                 <td>
                   {% cache 1800 hangupcause_name row.hangup_cause_id %}
                     {{ row.hangup_cause_id|hangupcause_name }}

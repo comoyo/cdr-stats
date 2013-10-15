@@ -694,8 +694,8 @@ def cdr_export_to_csv(request):
     writer = csv.writer(response, dialect=csv.excel_tab)
     writer.writerow(['Call-date', 'Caller ID', 'Destination', 'Duration',
                      'Talk time', 'Hangup cause', 'Country', 'Average Q',
-                     'Q 0-10', 'Q 10-20', 'Q 20-30', 'Q 30-40', 'Q 50-60',
-                     'Q 60-70', 'Q 70-80', 'Q 80-90', 'Q 90-100'])
+                     'Q 0-10', 'Q 10-20', 'Q 20-30', 'Q 30-40', 'Q 40-50', 'Q 50-60',
+                     'Q 60-70', 'Q 70-80', 'Q 80-90', 'Q 90-100', 'Network Type'])
 
     for cdr in final_result:
         avg_q = ''
@@ -726,6 +726,10 @@ def cdr_export_to_csv(request):
             q_90 = client_call_quality['q_90']
             q_100 = client_call_quality['q_100']
 
+        network_type = ''
+        if ('client_network_type' in cdr):
+            network_type = cdr['client_network_type']
+
         writer.writerow([
             cdr['start_uepoch'],
             cdr['caller_id_number'],
@@ -744,7 +748,8 @@ def cdr_export_to_csv(request):
             q_70,
             q_80,
             q_90,
-            q_100
+            q_100,
+            network_type
         ])
     return response
 

@@ -33,3 +33,4 @@ class CDR_COLUMN_NAME(Choice):
     account = _('Account')
     bill_amount = _('Bill amount')
     q_avg = _('Average Q')
+    client_network_type = _('Network type')
