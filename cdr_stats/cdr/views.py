@@ -210,7 +210,7 @@ def cdr_view(request):
         from mongodb collection according to search parameters
     """
     template_name = 'frontend/cdr_view.html'
-    logging.debug('CDR View Start')
+    logging.debug('CDR View Start. User: ' + request.user.username)
     query_var = {}
     result = 1  # default min
     switch_id = 0  # default all
@@ -636,7 +636,7 @@ def cdr_view(request):
     sort_field = pagination_data['sort_field']
     default_order = pagination_data['default_order']
 
-    logging.debug('Create cdr result')
+    logging.debug('Create cdr result. Query : ' + str(query_var) + ' User: ' + request.user.username)
     SKIP_NO = PAGE_SIZE * (PAGE_NUMBER - 1)
     record_count = final_result.count()
     rows = final_result.skip(SKIP_NO).limit(PAGE_SIZE)\
