@@ -50,6 +50,15 @@
         No IP End-to-end Statistics received.
     {% endif %}
 
+    {% if element.media_connect > 0 %}
+        <text>Media connect time:</text> {{ element.media_connect }}<br>
+    {% endif %}
+
+    {% if element.media_reserve > 0 %}
+        <text>Media reserve time:</text> {{ element.media_reserve }}<br>
+    {% endif %}
+
+
 
     {% if element.client_max_tx_packet_loss > -1 %}
         <p/>
