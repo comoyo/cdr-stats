@@ -58,6 +58,14 @@
         <text>Media reserve time:</text> {{ element.media_reserve }}<br>
     {% endif %}
 
+    {% if element.client_call_to_ringing > 0 %}
+        <text>Time from call to ringing:</text> {{ element.client_call_to_ringing }}<br>
+    {% endif %}
+
+    {% if element.footee_call_setup_time > 0 %}
+        <text>Footee call setup time:</text> {{ element.footee_call_setup_time }}<br>
+    {% endif %}
+
 
 
     {% if element.client_max_tx_packet_loss > -1 %}
@@ -233,6 +241,9 @@
         <text>Media reserve time:</text> {{ element.callee.media_reserve }}<br>
     {% endif %}
 
+    {% if element.callee.client_call_to_ringing > 0 %}
+        <text>Time from call to ringing:</text> {{ element.callee.client_call_to_ringing }}<br>
+    {% endif %}
 
 
     {% if element.callee.client_max_tx_packet_loss > -1 %}
