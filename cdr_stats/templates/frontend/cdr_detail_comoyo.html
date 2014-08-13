@@ -66,6 +66,14 @@
         <text>Footee call setup time:</text> {{ element.footee_call_setup_time }}<br>
     {% endif %}
 
+    {% if element.trunkie_call_to_ringing > 0 %}
+        <text>Trunkie call to ringing time:</text> {{ element.trunkie_call_to_ringing }}<br>
+    {% endif %}
+
+    {% if element.trunkie_call_to_status > 0 %}
+        <text>Trunkie call to status time:</text> {{ element.trunkie_call_to_status }}<br>
+        <text>Trunkie call status:</text> {{ element.trunkie_call_status }}<br>
+    {% endif %}
 
 
     {% if element.client_max_tx_packet_loss > -1 %}
