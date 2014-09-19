@@ -1,0 +1,33 @@
+== WHAT IS THIS ==
+
+These python scripts will generate setup time graphics
+from the TalkPlus CDR stats.
+
+The cdr-get-callid.py script is a convenience script for
+retrieving a single call ids full json stats.
+
+== INSTALLATION ==
+ $ sudo apt-get install python-pymongo python-pandas
+
+Move these python files into the correct directory.
+ $ sudo mkdir -p /usr/share/cdr_stats/templates/frontend/comoyo
+ $ sudo cp cdr-setup-times.py /usr/share/cdr_stats/templates/frontend/comoyo
+
+If you are running an older ubuntu distribution, check the source files for
+changing the MongoClient() call to a Connection() call used by earlier
+versions fo the pymongo plugin.
+
+Create the following script in /etc/cron.hourly/cdr-hourly
+----------------------------------------------
+#!/bin/bash
+# Update talkplus setup times hourly
+(cd /usr/share/cdr_stats/templates/frontend/comoyo; ./cdr-setup-times.py MONGODB-USERNAME MONGODB-PASSWORD >cdr-setup-times.log 2>&1)
+----------------------------------------------
+Replace mongdb-username and password with the apporpriate ones.
+Add execute permissions:
+ $ sudo chmod 755 /etc /etc/cron.hourly/cdr-hourly
+Make cron restart config
+ $ sudo kill -HUP `ps -lef | grep [c]rond`
+
+== UPDATE WEB PAGES TO INCLUDE GRAPHICS ==
+
