@@ -1,33 +1,44 @@
-== WHAT IS THIS ==
+=== WHAT IS THIS ===
 
-These python scripts will generate setup time graphics
+These python scripts will generate call setup time graphs
 from the TalkPlus CDR stats.
 
 The cdr-get-callid.py script is a convenience script for
-retrieving a single call ids full json stats.
+retrieving a single call_id´s full json stats.
 
-== INSTALLATION ==
+=== INSTALLATION ===
+
+On CDR-Stats server (e.g. aewa-staging-cdr-stats.c.skunk-works.no)
+1) Install the necessary packages
  $ sudo apt-get install python-pymongo python-pandas
 
-Move these python files into the correct directory.
- $ sudo mkdir -p /usr/share/cdr_stats/templates/frontend/comoyo
- $ sudo cp cdr-setup-times.py /usr/share/cdr_stats/templates/frontend/comoyo
+2) Move the python script into the correct directory.
+ $ sudo mkdir -p /usr/share/cdr_stats/static/comoyo
+ $ sudo cp cdr-setup-times.py /usr/share/cdr_stats/static/comoyo
 
+3) Old ubuntu distributions
 If you are running an older ubuntu distribution, check the source files for
 changing the MongoClient() call to a Connection() call used by earlier
 versions fo the pymongo plugin.
+Old python-pandas plugins (older than version 0.7.3) does not support
+stacked histograms, making the output somewhat less than optimal.
 
 Create the following script in /etc/cron.hourly/cdr-hourly
 ----------------------------------------------
 #!/bin/bash
 # Update talkplus setup times hourly
-(cd /usr/share/cdr_stats/templates/frontend/comoyo; ./cdr-setup-times.py MONGODB-USERNAME MONGODB-PASSWORD >cdr-setup-times.log 2>&1)
+(cd /usr/share/cdr_stats/static/comoyo; ./cdr-setup-times.py MONGODB-USERNAME MONGODB-PASSWORD >cdr-setup-times.log 2>&1)
 ----------------------------------------------
-Replace mongdb-username and password with the apporpriate ones.
-Add execute permissions:
+Replace mongdb-username and password with the apporpriate ones, found e.g.
+in the genie setup or 
+4) Add execute permissions:
  $ sudo chmod 755 /etc /etc/cron.hourly/cdr-hourly
-Make cron restart config
+5) Make cron restart config
  $ sudo kill -HUP `ps -lef | grep [c]rond`
 
-== UPDATE WEB PAGES TO INCLUDE GRAPHICS ==
+=== UPDATE WEB PAGES TO INCLUDE GRAPHICS ===
+
+6) Apply the patch cdr_dashboad.patch to the installation.
+  cd /usr/share/cdr_stats
+  patch -p1 < cdr_dashboard.patch
 

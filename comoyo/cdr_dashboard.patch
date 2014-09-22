@@ -1,0 +1,40 @@
+diff --git a/cdr_stats/templates/frontend/cdr_dashboard.html b/cdr_stats/templates/frontend/cdr_dashboard.html
+index b81f6f4..6a6f594 100644
+--- a/cdr_stats/templates/frontend/cdr_dashboard.html
++++ b/cdr_stats/templates/frontend/cdr_dashboard.html
+@@ -358,4 +358,33 @@ $(function () {
+ 
+     </div>
+ </div>
+-{% endblock %}
+\ No newline at end of file
++
++<p>
++  <div class="row">
++    <div class="span12">
++       <div class="graph_header">
++          <h2>Call Setup Times</h2>
++       </div>
++	  The CDR database is searched for calls during the last 30 days. Of these calls, a set of the latest ones matching the critera are being displayed in the graphs. These graphs are updated on an hourly basis.
++	  <h3>Incoming call to Talk+ 3G</h3>
++	  Talk+ client receiving a call (incoming) from PSTN SIP-trunk. Time is measured from our SIP infrastructure receives the SIP-INVITE message until the Talk+ client responds with the SIP-RINGING notification. Talk+ client is on a 3G network connection in this case.
++          <p>
++	  <img src="{{STATIC_URL}}/comoyo/pstn-to-talkplus3g.png">
++	  <h3>Incoming call to Talk+ Wi-Fi</h3>
++	  Talk+ client receiving a call (incoming) from PSTN SIP-trunk. Time is measured from our SIP infrastructure receives the SIP-INVITE message until the Talk+ client responds with the SIP-RINGING notification. Talk+ client is on a Wi-Fi network connection in this case.
++ 	  <p>
++	  <img src="{{STATIC_URL}}/comoyo/pstn-to-talkplusWiFi.png">
++	  <h3>Talk+ outgoing call to PSTN</h3>
++	  Talk+ client initiating a call that ends up on the PSTN network through the SIP-trunk. The receiver could either be on a GSM-mobile-phone or a fixed-line-telephone. Time is measured from the Talk+ mobile (3G/Wi-Fi) presses the call button until our SIP server infrastructure receives the SIP-RINGING notification.
++	  Footee setup time is the time needed to verify and authenticate the user and calling rights, basically the time we can optimize on our side.
++	  Talk+ client to server side is the time from the call is started until the server side initiates the call forwarding.
++	  <p>
++	  <img src="{{STATIC_URL}}/comoyo/talkplus-to-pstn.png">
++	  <h3>Talk+ outgoing call to Talk+ (IP-to-IP)</h3>
++	  Talk+ client initiating a call to another Talk+ client. Both caller and receiver can be on either 3G or Wi-Fi networks. Calls are only residing in the Talk+ server infrastructure and never touches the regular phone network (PSTN).
++	  <p>
++	  <img src="{{STATIC_URL}}/comoyo/talkplus-to-talkplus.png">
++    </div>
++  </div>
++
++{% endblock %}

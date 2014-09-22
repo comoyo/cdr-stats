@@ -92,3 +92,10 @@ above: (root/******)
 To view Detailed Stats, go to "Analytics -> Search" and press the maginifier
 glass (tool tip) "Show Details".
 
+
+=== OPTIONAL CALL SETUP TIME GRAPHS IN DASHBOARD ===
+
+Call-Setup time graphs can be provided by the python script in comoyo/cdr-setup-times.py.
+Go to the comoyo/ directory and follow the README to configure this option.
+
+
